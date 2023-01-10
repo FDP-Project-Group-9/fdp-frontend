@@ -1,11 +1,19 @@
-import React from 'react';
+import { ThemeProvider } from '@mui/material';
+
+import AppRoutes from './AppRoutes';
+import Layout from './containers/Layout/Layout';
+
+import { theme } from "./Theme";
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      hi there!!
-    </div>
+    <ThemeProvider theme = {theme}>
+      <Layout>
+        <AppRoutes />
+      </Layout>
+    </ThemeProvider>
   );
 }
 
