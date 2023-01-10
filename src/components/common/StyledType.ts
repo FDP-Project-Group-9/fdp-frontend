@@ -2,11 +2,12 @@ import {
     TypographyProps
 } from '@mui/material';
 
-interface StyledTypographyProps extends TypographyProps{
-    color?: string;
-    fontSize?: number
-};
-
-export type {
-    StyledTypographyProps,
+export interface StyledTypographyProps extends TypographyProps{
+    styles: {
+        color?: string;
+        fontSize?: number;
+        fontWeight?: number;
+        lineHeight?: number,
+        marginBottom?: number
+    }
 };

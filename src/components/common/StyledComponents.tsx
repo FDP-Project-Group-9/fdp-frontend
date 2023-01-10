@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Typography, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import type {
@@ -8,13 +8,11 @@ import { UniversalObjectType } from '../../common/Types';
 
 //custom styled Typography component
 const StyledTypography = styled(Typography)<StyledTypographyProps>((props) => {
-    const optionalStyles: UniversalObjectType = {};
+    let optionalStyles: UniversalObjectType = {};
 
-    if(props.fontSize)
-        optionalStyles['fontSize'] = props.fontSize;
-
-    if(props.color)
-        optionalStyles['color'] = props.color;
+    if(props.styles){
+        optionalStyles = {...optionalStyles, ...props.styles};
+    }   
 
     return {
         ...optionalStyles

@@ -49,7 +49,7 @@ export const theme = createTheme({
         MuiInput: {
             styleOverrides: {
                 input: {
-                    fontSize: "15px",
+                    fontSize: "14px",
                     ":focus": {
                         backgroundColor: "#F0F8FF",
                         borderRadius: "4px"
@@ -60,9 +60,9 @@ export const theme = createTheme({
         MuiInputLabel: {
             styleOverrides: {
                 root: {
-                    fontSize: "13px",
+                    fontSize: "12px",
                 }
             }
-        }
+        },
     }
   });
