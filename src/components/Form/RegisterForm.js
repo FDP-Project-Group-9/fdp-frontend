@@ -23,11 +23,11 @@ import {
 } from "antd";
 import { useState, Fragment } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { registerUser } from "../../utils/apiCall";
+import { registerUser, requestHandler } from "../../utils/apiCall";
+import { UMS_API_URLS } from "../../utils/constants";
 const { Title } = Typography;
 const {Option} = Select;
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
+
 const RegisterForm = () => {
   const [user,setUser] = React.useState({
     "email_id": "",
@@ -45,21 +45,14 @@ const navigate = useNavigate();
   const handleChange = (event) => {
      setUser({...user,[event.target.id] : event.target.value})
   }
-  const onFinish = (e) => {
-    if(user.password !== user.confirm_password) {
-      openNotificationWithIcon("error", "Password should match!");
+  const onFinish = async (e) => {
+    try {
+      await requestHandler.post(UMS_API_URLS.SIGNUP, user);
+      navigate("/login");
     }
-    console.log(user.dob)
-    // user.dob = ś
-    registerUser(user)
-    .then(() => {
-      openNotificationWithIcon("success", `User Registered Successfully`);
-      navigate('/login')
-    })
-    .catch((err) => {
-      openNotificationWithIcon("error", `${err.response ? err.response.data.errors[0].msg : "Something went wrong"}`);
-    })
-    // console.log("Success:", values);
+    catch(error) {
+      return;
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -127,7 +120,6 @@ const navigate = useNavigate();
                   ]}
                 >
                   <Select name="role_id" onChange={(event) => {setUser({...user,role_id:event})}}>
-                    <Select.Option value="1">Admin</Select.Option>
                     <Select.Option value="2">
                       Coordinator
                     </Select.Option>
@@ -149,9 +141,8 @@ const navigate = useNavigate();
                   ]}
                 >
                   <Select onChange={(event) => {setUser({...user,title:event})}}>
-                    <Option value="Mr.">Mr.</Option>
-                    <Option value="Mrs.">Mrs.</Option>
-                    <Option value="Miss">Miss</Option>
+                    <Option value="Mr.">Mr</Option>
+                    <Option value="Ms.">Ms</Option>
                   </Select>
                 </Form.Item>
               </Col>
@@ -181,7 +172,7 @@ const navigate = useNavigate();
                   value="last_name"
                   rules={[
                     {
-                      required: false,
+                      required: true,
                       message: "Please input your Last Name!",
                     },
                   ]}
@@ -202,6 +193,10 @@ const navigate = useNavigate();
                       required: true,
                       message: "Please input your email!",
                     },
+                    {
+                      type: 'email',
+                      message: "Please Enter a valid email!"
+                    }
                   ]}
                 >
                   <Input />
@@ -218,6 +213,14 @@ const navigate = useNavigate();
                       required: true,
                       message: "Please input your mobile no!",
                     },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue('mobile_no').length == 10) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(new Error('The length of mobile number should be 10!'));
+                      },
+                    }),
                   ]}
                 >
                   <Input type="number" maxLength={10} minLength={10}/>
@@ -240,7 +243,7 @@ const navigate = useNavigate();
                   <Select  onChange={(event) => {setUser({...user,gender:event})}}>
                     <Select.Option value="Male">Male</Select.Option>
                     <Select.Option value="Female">Female</Select.Option>
-                    <Select.Option value="Others">Others</Select.Option>
+                    <Select.Option value="Other">Other</Select.Option>
                   </Select>
                 </Form.Item>
               </Col>
@@ -288,6 +291,14 @@ const navigate = useNavigate();
                       required: true,
                       message: "Please confirm your password!",
                     },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue('password') === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                      },
+                    }),
                   ]}
                 >
                   <Input type="password" />

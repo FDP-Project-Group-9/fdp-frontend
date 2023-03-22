@@ -1,72 +1,38 @@
 import axios from "axios";
-import {API_URL} from "./../config/config"
-const getToken = () => {
-    let token = localStorage.getItem("token")
-    return token;
+import { openNotificationWithIcon } from "../components/Extras/Notification";
+import { API_METHODS, baseAPIUrl } from "./constants";
+import { getToken } from "./helper";
 
-}
-export const registerUser = (user) => {
-    const url = `${API_URL}/ums/signup`;
-    return axios(url, {
-        withCredentials : true,
-        method: 'post',
-        data : user
-    });
-}
+const RequestInstance = axios.create({
+    baseURL: baseAPIUrl,
+    headers: {
+        'Authorization': getToken()
+    }
+});
 
-export const getUser = (user) => {
-    const url = `${API_URL}/ums/user-details/${user}`;
-    return axios(url, {
-        withCredentials : true,
-        method: 'get',
-        data : user,
-        headers : {
-            Authorization : getToken()
+const makeRequest = async (url, data, method) => {
+    try {
+        const response = await RequestInstance({
+            url: url,
+            method: method,
+            data: data
+        });
+        if(method != API_METHODS.GET) {
+            openNotificationWithIcon("success", response.data.msg);
         }
-    });
-}
+        return response.data;
+    }
+    catch(error) {
+        error.response.data.errors.forEach(error => {
+            openNotificationWithIcon("error", error.msg);
+        });
+        throw error;    
+    }
+};
 
-export const loginUser = (user) => {
-    const url = `${API_URL}/ums/login`;
-    return axios(url, {
-        withCredentials : true,
-        method: 'post',
-        data : user
-    });
-}
-
-export const createWorkshop = (id) => {
-    const url = `${API_URL}/workshop/create-workshop`
-    return axios(url, {
-        withCredentials : true,
-        method: 'put',
-        data : id,
-        headers : {
-            Authorization : getToken()
-        }
-    });
-}
-
-export const getWorkshopDetails = (id) => {
-    const url = `${API_URL}/workshop/${id}`
-    return axios(url, {
-        withCredentials : true,
-        method: 'get',
-        headers : {
-            Authorization : getToken()
-        }
-    });
-}
-
-export const createDraftWorkshop = () => {
-    const url = `${API_URL}/workshop/create-workshop/draft`
-    return axios(url, {
-        withCredentials : true,
-        method: 'post',
-        headers : {
-            Authorization : getToken()
-        }
-    });
-}
-
-
+export const requestHandler = {
+    get: (url) => makeRequest(url, {}, API_METHODS.GET),
+    post: (url, data) => makeRequest(url, data, API_METHODS.POST),
+    put: (url, data) => makeRequest(url, data, API_METHODS.PUT),
+    delete: (url, data) => makeRequest(url, data, API_METHODS.DELETE)
+};

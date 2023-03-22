@@ -23,12 +23,15 @@ import {
 import { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { openNotificationWithIcon } from "../Extras/Notification";
-import { loginUser } from "../../utils/apiCall";
+import { loginUser, requestHandler } from "../../utils/apiCall";
+import { getJWTData, setJwtToken, setProfileStatus } from "../../utils/helper";
+import { UMS_API_URLS } from "../../utils/constants";
 const { Title } = Typography;
 const {Option} = Select;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-const SignInForm = ({setIsAuthenticate}) => {
+
+const SignInForm = () => {
   const navigate = useNavigate();
   const [user,setUser] = React.useState({
     "email_id": "",
@@ -37,22 +40,18 @@ const SignInForm = ({setIsAuthenticate}) => {
   const handleChange = (event) => {
      setUser({...user,[event.target.id] : event.target.value})
   }
-  const onFinish = (values) => {
-    loginUser(user)
-    .then((res) => {
-      openNotificationWithIcon("success", `User Authenticated Successfully!`);
-      localStorage.setItem("token", res.data.token)
-      localStorage.setItem("isAuthenticated", true);
-      localStorage.setItem("user",jwt(res.data.token).id)
-      setIsAuthenticate();
-      // navigate('/application')
-    })
-    .catch((err) => {
-      console.log(err)
-      openNotificationWithIcon("error", `${err.response ? err.response.data.errors[0].msg : "Something went wrong"}`);
-    })
-    // console.log("Success:", values);
-  };
+  const onFinish = async (values) => {
+    try {
+      const response = await requestHandler.post(UMS_API_URLS.LOGIN, user);
+      setJwtToken(response.token.split(' ')[1]);
+      setProfileStatus();
+      navigate(`/${getJWTData().role_name}/dashboard`);
+    }
+    catch(error) {
+      return error;
+    }
+  }
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
