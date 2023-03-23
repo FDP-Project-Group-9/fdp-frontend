@@ -24,7 +24,7 @@ import {
 import { useState, Fragment } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { registerUser, requestHandler } from "../../utils/apiCall";
-import { UMS_API_URLS } from "../../utils/constants";
+import { OPEN_ROUTES, UMS_API_URLS } from "../../utils/constants";
 const { Title } = Typography;
 const {Option} = Select;
 
@@ -48,7 +48,12 @@ const navigate = useNavigate();
   const onFinish = async (e) => {
     try {
       await requestHandler.post(UMS_API_URLS.SIGNUP, user);
-      navigate("/login");
+      if(user.role_id == "2"){
+        navigate(OPEN_ROUTES.UPLOAD_DOCS);
+      } 
+      else {
+        navigate("/login");
+      }
     }
     catch(error) {
       return;
@@ -86,7 +91,7 @@ const navigate = useNavigate();
           style={{
             margin: 20,
             padding: "0 40px",
-            boxShadow: "1px 2px 5px black",
+            boxShadow: "0px 0px 5px 1px #e6f4ff",
             alignContent: "center",
             alignItems:"center"
           }}

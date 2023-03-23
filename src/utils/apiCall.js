@@ -23,10 +23,13 @@ const makeRequest = async (url, data, method) => {
         return response.data;
     }
     catch(error) {
+        const err = new Error();
         error.response.data.errors.forEach(error => {
             openNotificationWithIcon("error", error.msg);
+            err.msg = error.msg;
+            err.status = error.status;
         });
-        throw error;    
+        throw err;    
     }
 };
 

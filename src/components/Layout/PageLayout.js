@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Avatar, Layout, Menu } from "antd";
 import { LogoutOutlined } from '@ant-design/icons';
@@ -13,17 +14,29 @@ const getItem = ({
     label,
     key,
     icon = null,
+    danger = null,
+    children = null
 }) => {
     return {
       key,
       icon,
-      label
+      label,
+      danger,
+      children
     };
 }
 
-const AdministratorSideMenuOptions = Object.values(ADMIN_NAVMENU_OPTIONS).map(navOption => getItem({...navOption}));
-const CoordinatroSideMenuOptions = Object.values(COORDINATOR_NAVMENU_OPTIONS).map(navOption => getItem({...navOption}));
-const ParticipantSideMenuOptions = Object.values(PARTICIPANT_NAVMENU_OPTIONS).map(navOption => getItem({...navOption}));
+const createMenuOptions = (options) => {
+    return Object.values(options).map(navOption => { 
+        const navMenu = {...navOption};
+        navMenu.children = navMenu.children?.map(children => getItem({...children}));
+        return getItem({...navMenu});
+    });
+};
+
+const AdministratorSideMenuOptions = createMenuOptions(ADMIN_NAVMENU_OPTIONS);
+const CoordinatroSideMenuOptions = createMenuOptions(COORDINATOR_NAVMENU_OPTIONS);
+const ParticipantSideMenuOptions = createMenuOptions(PARTICIPANT_NAVMENU_OPTIONS);
 
 const SideMenuOptions = () => {
     const roleName = getJWTData().role_name;
@@ -39,9 +52,14 @@ const SideMenuOptions = () => {
 const PageLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [openMenuKeys, setOpenMenuKeys] = useState(['workshop_menu']);
     const navigationChangeHandler = (event) => {
         navigate(event.key);
     };
+
+    const onSubMenuOpenChangeHandler = (event) => {
+        setOpenMenuKeys([event[1]]);
+    }
 
     const logoutHandler = () => {
         logout(); 
@@ -55,8 +73,23 @@ const PageLayout = () => {
                     <Avatar src = {UserProfile} size = {128} style = {{marginBottom: '10px'}}/>
                     {getJWTData().role_name.toUpperCase()}
                 </div>
-                <Menu className = {styles['nav-items']} theme = {"dark"} onClick = {navigationChangeHandler} items = {SideMenuOptions()} selectedKeys = {[location.pathname]}/>
-                <Menu className = {[styles['nav-items'], styles['logout-btn']].join(' ')} theme = {"dark"} items = {[getItem({label: 'Logout', key: OPEN_ROUTES.LOGIN, icon: <LogoutOutlined />})]} onClick = {logoutHandler} selectedKeys = {[OPEN_ROUTES.LOGIN]}/>
+                <Menu   
+                    mode = "inline" 
+                    className = {styles['nav-items']} 
+                    theme = {"dark"} 
+                    onClick = {navigationChangeHandler} 
+                    items = {SideMenuOptions()} 
+                    selectedKeys = {[location.pathname]} 
+                    openKeys = {openMenuKeys} 
+                    onOpenChange = {onSubMenuOpenChangeHandler}
+                />
+                <Menu 
+                    className = {[styles['nav-items'], styles['logout-btn']].join(' ')} 
+                    theme = {"dark"} 
+                    items = {[getItem({label: 'Logout', key: OPEN_ROUTES.LOGIN, icon: <LogoutOutlined />, danger: true})]} 
+                    onClick = {logoutHandler} 
+                    selectedKeys = {[OPEN_ROUTES.LOGIN]}
+                />
             </Sider>
             <Content className = {styles.content}>
                 <Outlet />

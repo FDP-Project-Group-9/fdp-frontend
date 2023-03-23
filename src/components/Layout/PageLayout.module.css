@@ -9,7 +9,7 @@
 
 .nav-items {
     font-weight: 600 !important; 
-    color: #fff !important;
+    /* color: #fff !important; */
 }
 
 .logout-btn {
@@ -24,10 +24,11 @@
     align-items: center;
     justify-content: center;
     flex-direction: column; 
-    color: white;
+    color: var(--white);
     font-weight: 600;
 }
 
 .content {
     margin-left: 250px;
+    padding: 24px;
 }
