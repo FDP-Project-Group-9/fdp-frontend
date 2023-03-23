@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Row, Col, Typography, Card, Upload, Button, Space, Input, Form } from "antd";
+import { Row, Col, Typography, Card, Upload, Button, Space, Input, Form, message } from "antd";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 
 import styles from './CoordinatorSignupDocs.module.css';
@@ -37,7 +37,10 @@ const CoordinatorSignupDocs = () => {
             formData.append('email_id', emailId);
             files.forEach(file => formData.append('docs', file));
             await requestHandler.post(UMS_API_URLS.UPLOAD_FILES, formData);
-            navigate("/login");   
+            message.success("The Administrator has been notified about your registration!");
+            setTimeout(() => {
+                navigate("/login");   
+            }, 1000);
         }
         catch(error){}
         setLoading(false);
