@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* custom theme colors variables */
+:root {
+  ---blue1: #e6f4ff;
+}

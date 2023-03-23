@@ -1,18 +1,22 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 
-import RegisterForm from '../components/Form/RegisterForm';
-import SignInForm from '../components/Form/SignInForm';
+import RegisterForm from '../components/UserManagement/RegisterForm';
+import SignInForm from '../components/UserManagement/SignInForm';
 import PageLayout from '../components/Layout/PageLayout';
 
 import { ADMIN_ROUTES, OPEN_ROUTES, ROLE_NAMES, COORDINATOR_ROUTES } from '../utils/constants';
 import AuthRoute from './AuthRoute';
 import RoleAuthRoute from './RoleAuthRoute';
+import { getJWTData, isLoggedIn } from '../utils/helper';
+import CoordinatorSignupDocs from '../components/UserManagement/CoordinatorSignupDocs/CoordinatorSignupDocs';
 
 const AppRoutes = (props) => {
+    const roleName = isLoggedIn() ? getJWTData().role_name : "";
     return (
         <Routes>
             <Route path = {OPEN_ROUTES.LOGIN} element = {<SignInForm />} />
             <Route path = {OPEN_ROUTES.SIGNUP} element = {<RegisterForm />} />
+            <Route path = {OPEN_ROUTES.UPLOAD_DOCS} element = {<CoordinatorSignupDocs />} />
             <Route element = {<AuthRoute />}>
                 <Route element = {<PageLayout />}>
                     {/* ADMINISTRATOR ROUTES */}
@@ -22,7 +26,13 @@ const AppRoutes = (props) => {
                     {/* COORDINATOR ROUTES */}
                     <Route element = {<RoleAuthRoute roleName = {ROLE_NAMES.COORDINATOR}/>}>
                         <Route path = {COORDINATOR_ROUTES.BASE}>
-                            <Route path = {COORDINATOR_ROUTES.DASHBOARD} element = {<h1 style = {{height: "200vh"}}>ffewfwewf</h1>} />
+                            <Route path = {COORDINATOR_ROUTES.My_WORKSHOP} element = {<h1>fewffef</h1>} />
+                            <Route path = {COORDINATOR_ROUTES.CREATE_WORKSHOP} element = {<h1>fewffef</h1>} />
+                            <Route path = {COORDINATOR_ROUTES.RESOURCE_PERSON} element = {<h1>fewffef</h1>} />
+                            <Route path = {COORDINATOR_ROUTES.PARTICIPANTS} element = {<h1>fewffef</h1>} />
+                            <Route path = {COORDINATOR_ROUTES.FEEDBACK} element = {<h1>fewffef</h1>} />
+                            <Route path = {COORDINATOR_ROUTES.CERTIFICATE} element = {<h1>fewffef</h1>} />
+                            <Route path = {COORDINATOR_ROUTES.ATTENDANCE} element = {<h1>fewffef</h1>} />
                             <Route path = {COORDINATOR_ROUTES.PROFILE} element = {<h1>fewffef</h1>} />
                         </Route>
                     </Route>
@@ -31,6 +41,7 @@ const AppRoutes = (props) => {
                         {/* <Route element = {<ParticipantRoutes />} /> */}
                     </Route>
                 </Route>
+                <Route path = {OPEN_ROUTES.NO_MATCH} element = {<Navigate to = {`${roleName}/workshops`}/>} />
             </Route>
             <Route path = {OPEN_ROUTES.NO_MATCH} element = {<Navigate to = {OPEN_ROUTES.LOGIN}/>}/>
         </Routes>

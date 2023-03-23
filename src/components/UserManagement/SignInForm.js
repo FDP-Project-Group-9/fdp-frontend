@@ -24,7 +24,7 @@ import { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { openNotificationWithIcon } from "../Extras/Notification";
 import { loginUser, requestHandler } from "../../utils/apiCall";
-import { getJWTData, setJwtToken, setProfileStatus } from "../../utils/helper";
+import { getJWTData, initializeUserValues, setJwtToken} from "../../utils/helper";
 import { UMS_API_URLS } from "../../utils/constants";
 const { Title } = Typography;
 const {Option} = Select;
@@ -44,11 +44,13 @@ const SignInForm = () => {
     try {
       const response = await requestHandler.post(UMS_API_URLS.LOGIN, user);
       setJwtToken(response.token.split(' ')[1]);
-      setProfileStatus();
-      navigate(`/${getJWTData().role_name}/dashboard`);
+      initializeUserValues();
+      navigate(`/${getJWTData().role_name}/workshops`);
     }
     catch(error) {
-      return error;
+      console.log(error);
+      if(error.status == 404)
+        navigate("/upload-docs");
     }
   }
 
@@ -83,7 +85,7 @@ const SignInForm = () => {
           style={{
             margin: "20px 200px",
             padding: "0 40px",
-            boxShadow: "1px 2px 5px black",
+            boxShadow: "0px 0px 5px 1px #e6f4ff",
             alignContent: "center",
             alignItems:"center"
           }}
