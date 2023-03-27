@@ -1,0 +1,21 @@
+.profile-subtext {
+    padding-left: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-content {
+    padding-left: 12px;
+}
+
+.edit-btn {
+    margin-top: 16px;
+}
+
+.institute-details-header {
+    width: 100%;
+}
+
+.institute-details-header > div{
+    width: 100%;
+}

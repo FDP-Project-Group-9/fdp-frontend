@@ -1,5 +1,12 @@
 export const baseAPIUrl = 'http://localhost:5000';
 
+export enum API_STATUS_ENUM {
+    IDLE = "idle",
+    LOADING = "loading",
+    SUCCESS = "success",
+    FAILED = "failed"
+};
+
 export enum ROLE_NAMES {
     ADMINISTRATOR = 'administrator',
     COORDINATOR = 'coordinator',
@@ -11,12 +18,6 @@ export enum API_METHODS {
     POST = 'post',
     PUT = 'put',
     DELETE = 'delete'
-};
-
-export enum UMS_API_URLS {
-    LOGIN = '/ums/login',
-    SIGNUP = '/ums/signup',
-    UPLOAD_FILES = '/ums/upload-files'
 };
 
 export enum OPEN_ROUTES {
@@ -41,14 +42,15 @@ export enum OPEN_ROUTES {
 
 export enum COORDINATOR_ROUTES {
     BASE = "/coordinator",
-    PROFILE = "/coordinator/profile",
     My_WORKSHOP = "/coordinator/workshops",
     CREATE_WORKSHOP = "/coordinator/workshop/create-workshop",
     RESOURCE_PERSON = "/coordinator/workshop/resource-person",
     PARTICIPANTS = "/coordinator/workshop/participants",
     FEEDBACK = "/coordinator/workshop/feedback",
     CERTIFICATE = "/coordinator/workshop/certificate",
-    ATTENDANCE = "/coordinator/workshop/attendance"
+    ATTENDANCE = "/coordinator/workshop/attendance",
+    MY_PROFILE = "/coordinator/my-profile",
+    MANDATE_DOCS = "/coordinator/mandate-docs",
 };
 
 export enum PARTICIPANT_ROUTES {
@@ -110,6 +112,21 @@ const COORDINATOR_WORKSHOP_NAV_OPTIONS = [
     }
 ];
 
+const COORDINATOR_PROFILE_NAV_OPTIONS = [
+    {
+        label: 'My Profile',
+        key: COORDINATOR_ROUTES.MY_PROFILE,
+        icon: null,
+        children: null
+    },
+    {
+        label: 'Mandate Documents',
+        key: COORDINATOR_ROUTES.MANDATE_DOCS,
+        icon: null,
+        children: null
+    },
+];
+
 export const COORDINATOR_NAVMENU_OPTIONS = {
     WORKSHOP: {
         label: 'Workshop',
@@ -119,9 +136,9 @@ export const COORDINATOR_NAVMENU_OPTIONS = {
     },
     PROFILE: {
         label: 'Profile',
-        key: COORDINATOR_ROUTES.PROFILE,
+        key: 'profile_menu',
         icon: null,
-        children: null
+        children: COORDINATOR_PROFILE_NAV_OPTIONS
     }
 };
 

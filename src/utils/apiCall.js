@@ -6,7 +6,7 @@ import { getToken } from "./helper";
 const RequestInstance = axios.create({
     baseURL: baseAPIUrl,
     headers: {
-        'Authorization': getToken()
+        'Authorization': 'Bearer ' + getToken()
     }
 });
 
@@ -24,11 +24,28 @@ const makeRequest = async (url, data, method) => {
     }
     catch(error) {
         const err = new Error();
-        error.response.data.errors.forEach(error => {
-            openNotificationWithIcon("error", error.msg);
-            err.msg = error.msg;
-            err.status = error.status;
-        });
+        if(error.response.status == 500) {
+            err.msg = "Something went wrong!";
+            err.status = 500;
+            openNotificationWithIcon("error", err.msg);
+        }
+        else if(error.response.status == 502) {
+            err.msg = "Cannot reach the servers at the moment, Please try agian later!";
+            err.status = 500;
+            openNotificationWithIcon("error", err.msg);
+        }
+        else if(error.response.data.errors){
+            error.response.data.errors.forEach(error => {
+                openNotificationWithIcon("error", error.msg);
+                err.msg = error.msg;
+                err.status = error.status;
+            });
+        }
+        else if(error.response.status == 404) {
+            err.msg = "Could not find the resource!";
+            err.status = 500;
+            openNotificationWithIcon("error", err.msg);
+        }
         throw err;    
     }
 };

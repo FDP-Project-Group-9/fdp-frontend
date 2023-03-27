@@ -5,7 +5,7 @@ import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 
 import styles from './CoordinatorSignupDocs.module.css';
 import { requestHandler } from '../../../utils/apiCall';
-import { UMS_API_URLS } from '../../../utils/constants';
+import { UMS_API_URLS } from '../../../utils/apiUrls';
 import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;

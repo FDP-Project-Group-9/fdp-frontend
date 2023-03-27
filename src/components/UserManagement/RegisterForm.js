@@ -21,10 +21,11 @@ import {
   Upload,
   Typography,
 } from "antd";
-import { useState, Fragment } from "react";
+import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { registerUser, requestHandler } from "../../utils/apiCall";
-import { OPEN_ROUTES, UMS_API_URLS } from "../../utils/constants";
+import { requestHandler } from "../../utils/apiCall";
+import { OPEN_ROUTES } from "../../utils/constants";
+import { UMS_API_URLS } from "../../utils/apiUrls";
 const { Title } = Typography;
 const {Option} = Select;
 
@@ -146,8 +147,11 @@ const navigate = useNavigate();
                   ]}
                 >
                   <Select onChange={(event) => {setUser({...user,title:event})}}>
-                    <Option value="Mr.">Mr</Option>
-                    <Option value="Ms.">Ms</Option>
+                    <Option value = "Dr">Dr</Option>
+                    <Option value = "Er">Er</Option>
+                    <Option value = "Prof">Prof</Option>
+                    <Option value="Mr">Mr</Option>
+                    <Option value="Ms">Ms</Option>
                   </Select>
                 </Form.Item>
               </Col>

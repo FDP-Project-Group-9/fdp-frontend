@@ -9,6 +9,7 @@ import AuthRoute from './AuthRoute';
 import RoleAuthRoute from './RoleAuthRoute';
 import { getJWTData, isLoggedIn } from '../utils/helper';
 import CoordinatorSignupDocs from '../components/UserManagement/CoordinatorSignupDocs/CoordinatorSignupDocs';
+import Profile from '../components/UserManagement/Profile/Profile';
 
 const AppRoutes = (props) => {
     const roleName = isLoggedIn() ? getJWTData().role_name : "";
@@ -26,14 +27,15 @@ const AppRoutes = (props) => {
                     {/* COORDINATOR ROUTES */}
                     <Route element = {<RoleAuthRoute roleName = {ROLE_NAMES.COORDINATOR}/>}>
                         <Route path = {COORDINATOR_ROUTES.BASE}>
-                            <Route path = {COORDINATOR_ROUTES.My_WORKSHOP} element = {<h1>fewffef</h1>} />
+                            <Route path = {COORDINATOR_ROUTES.My_WORKSHOP} element = {<h1 style = {{backgroundColor: 'white', height: '50vh', boxShadow: '0px 0px 10px 1px #d9d9d9'}}>fewffef</h1>} />
                             <Route path = {COORDINATOR_ROUTES.CREATE_WORKSHOP} element = {<h1>fewffef</h1>} />
                             <Route path = {COORDINATOR_ROUTES.RESOURCE_PERSON} element = {<h1>fewffef</h1>} />
                             <Route path = {COORDINATOR_ROUTES.PARTICIPANTS} element = {<h1>fewffef</h1>} />
                             <Route path = {COORDINATOR_ROUTES.FEEDBACK} element = {<h1>fewffef</h1>} />
                             <Route path = {COORDINATOR_ROUTES.CERTIFICATE} element = {<h1>fewffef</h1>} />
                             <Route path = {COORDINATOR_ROUTES.ATTENDANCE} element = {<h1>fewffef</h1>} />
-                            <Route path = {COORDINATOR_ROUTES.PROFILE} element = {<h1>fewffef</h1>} />
+                            <Route path = {COORDINATOR_ROUTES.MY_PROFILE} element = {<Profile />} />
+                            <Route path = {COORDINATOR_ROUTES.MANDATE_DOCS} element = {<h1>fewffef</h1>} />
                         </Route>
                     </Route>
                     {/* PARTICIPANT ROUTES */}
