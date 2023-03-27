@@ -25,7 +25,7 @@ import { Link } from "react-router-dom";
 import { openNotificationWithIcon } from "../Extras/Notification";
 import { loginUser, requestHandler } from "../../utils/apiCall";
 import { getJWTData, initializeUserValues, setJwtToken} from "../../utils/helper";
-import { UMS_API_URLS } from "../../utils/constants";
+import { UMS_API_URLS } from "../../utils/apiUrls";
 const { Title } = Typography;
 const {Option} = Select;
 const { RangePicker } = DatePicker;

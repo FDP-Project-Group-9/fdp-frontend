@@ -48,11 +48,25 @@ const SideMenuOptions = () => {
         return ParticipantSideMenuOptions;
 };
 
+const findOpenMenuKey = (menuItems, pathname) => {
+    let menuItem = menuItems.find(item => {
+        if(item.children) {
+            if(item.children.find(childItem => childItem.key == pathname)){
+                return true;
+            }
+        }
+    });
+    return menuItem?.key || "";
+};
 
 const PageLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [openMenuKeys, setOpenMenuKeys] = useState(['workshop_menu']);
+
+    const menuItems = SideMenuOptions();
+
+    const [openMenuKeys, setOpenMenuKeys] = useState([findOpenMenuKey(menuItems, location.pathname)]);
+
     const navigationChangeHandler = (event) => {
         navigate(event.key);
     };
@@ -78,7 +92,7 @@ const PageLayout = () => {
                     className = {styles['nav-items']} 
                     theme = {"dark"} 
                     onClick = {navigationChangeHandler} 
-                    items = {SideMenuOptions()} 
+                    items = {menuItems} 
                     selectedKeys = {[location.pathname]} 
                     openKeys = {openMenuKeys} 
                     onOpenChange = {onSubMenuOpenChangeHandler}

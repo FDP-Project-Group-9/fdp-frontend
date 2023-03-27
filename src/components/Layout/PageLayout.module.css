@@ -7,9 +7,12 @@
     bottom: 0;
 }
 
+.nav-bar::-webkit-scrollbar {
+    width: 0px;
+}
+
 .nav-items {
     font-weight: 600 !important; 
-    /* color: #fff !important; */
 }
 
 .logout-btn {
@@ -31,4 +34,5 @@
 .content {
     margin-left: 250px;
     padding: 24px;
+    background-color: var(--gray3);
 }
