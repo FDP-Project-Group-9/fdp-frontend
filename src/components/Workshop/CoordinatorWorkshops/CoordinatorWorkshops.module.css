@@ -1,0 +1,22 @@
+.container::-webkit-scrollbar {
+    width: 0px;
+}
+
+.scrollable-div-container {
+    max-height: 75vh;
+    overflow: auto;
+    background-color: transparent;
+}
+
+.item-card {
+    border: 1px solid var(--gray5) !important;
+    padding: 0px !important;
+    margin: 12px 0px;
+    border-radius: 8px;
+}
+
+.filters-card {
+    margin-top: 12px;
+    height: 74vh;
+    box-sizing: border-box;
+}

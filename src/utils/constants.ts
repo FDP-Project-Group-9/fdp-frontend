@@ -40,17 +40,19 @@ export enum OPEN_ROUTES {
 
 */
 
-export enum COORDINATOR_ROUTES {
-    BASE = "/coordinator",
-    My_WORKSHOP = "/coordinator/workshops",
-    CREATE_WORKSHOP = "/coordinator/workshop/create-workshop",
-    RESOURCE_PERSON = "/coordinator/workshop/resource-person",
-    PARTICIPANTS = "/coordinator/workshop/participants",
-    FEEDBACK = "/coordinator/workshop/feedback",
-    CERTIFICATE = "/coordinator/workshop/certificate",
-    ATTENDANCE = "/coordinator/workshop/attendance",
-    MY_PROFILE = "/coordinator/my-profile",
-    MANDATE_DOCS = "/coordinator/mandate-docs",
+export enum ROUTES {
+    // BASE = "/coordinator",
+    My_WORKSHOP = "/workshop",
+    ALL_WORKSHOPS = "/all-workshops",
+    CREATE_WORKSHOP = "/create-workshop",
+    RESOURCE_PERSON = "/workshop/resource-person",
+    PARTICIPANTS = "/workshop/participants",
+    FEEDBACK = "/workshop/feedback",
+    CERTIFICATE = "/workshop/certificate",
+    ATTENDANCE = "/workshop/attendance",
+    MY_PROFILE = "/my-profile",
+    MANDATE_DOCS = "/mandate-docs",
+    FINANCES = "/finances"
 };
 
 export enum PARTICIPANT_ROUTES {
@@ -69,59 +71,71 @@ export const ADMIN_NAVMENU_OPTIONS = {
 
 const COORDINATOR_WORKSHOP_NAV_OPTIONS = [
     {
+        label: 'All Workshops',
+        key: ROUTES.ALL_WORKSHOPS,
+        icon: null,
+        children: null
+    },
+    {
         label: 'My Workshops',
-        key: COORDINATOR_ROUTES.My_WORKSHOP,
+        key: ROUTES.My_WORKSHOP,
         icon: null,
         children: null
     },
     {
         label: 'Create Workshop',
-        key: COORDINATOR_ROUTES.CREATE_WORKSHOP,
+        key: ROUTES.CREATE_WORKSHOP,
         icon: null,
         children: null
     },
     {
-        label: 'Resource Person',
-        key: COORDINATOR_ROUTES.RESOURCE_PERSON,
+        label: 'Finances',
+        key: ROUTES.FINANCES,
         icon: null,
         children: null
     },
-    {
-        label: 'Participants',
-        key: COORDINATOR_ROUTES.PARTICIPANTS,
-        icon: null,
-        children: null
-    },
-    {
-        label: 'Feedback',
-        key: COORDINATOR_ROUTES.FEEDBACK,
-        icon: null,
-        children: null
-    },
-    {
-        label: 'Certificate',
-        key: COORDINATOR_ROUTES.CERTIFICATE,
-        icon: null,
-        children: null
-    },
-    {
-        label: 'Attendance',
-        key: COORDINATOR_ROUTES.ATTENDANCE,
-        icon: null,
-        children: null
-    }
+    // {
+    //     label: 'Resource Person',
+    //     key: ROUTES.RESOURCE_PERSON,
+    //     icon: null,
+    //     children: null
+    // },
+    // {
+    //     label: 'Participants',
+    //     key: ROUTES.PARTICIPANTS,
+    //     icon: null,
+    //     children: null
+    // },
+    // {
+    //     label: 'Feedback',
+    //     key: ROUTES.FEEDBACK,
+    //     icon: null,
+    //     children: null
+    // },
+    // {
+    //     label: 'Certificate',
+    //     key: ROUTES.CERTIFICATE,
+    //     icon: null,
+    //     children: null
+    // },
+    // {
+    //     label: 'Attendance',
+    //     key: ROUTES.ATTENDANCE,
+    //     icon: null,
+    //     children: null
+    // }
 ];
 
 const COORDINATOR_PROFILE_NAV_OPTIONS = [
     {
         label: 'My Profile',
-        key: COORDINATOR_ROUTES.MY_PROFILE,
+        key: ROUTES.MY_PROFILE,
         icon: null,
         children: null
     },
     {
         label: 'Mandate Documents',
-        key: COORDINATOR_ROUTES.MANDATE_DOCS,
+        key: ROUTES.MANDATE_DOCS,
         icon: null,
         children: null
     },

@@ -4,10 +4,7 @@ import { API_METHODS, baseAPIUrl } from "./constants";
 import { getToken } from "./helper";
 
 const RequestInstance = axios.create({
-    baseURL: baseAPIUrl,
-    headers: {
-        'Authorization': 'Bearer ' + getToken()
-    }
+    baseURL: baseAPIUrl
 });
 
 const makeRequest = async (url, data, method) => {
@@ -15,7 +12,10 @@ const makeRequest = async (url, data, method) => {
         const response = await RequestInstance({
             url: url,
             method: method,
-            data: data
+            data: data,
+            headers: {
+                'Authorization': 'Bearer ' + getToken()
+            }
         });
         if(method != API_METHODS.GET) {
             openNotificationWithIcon("success", response.data.msg);

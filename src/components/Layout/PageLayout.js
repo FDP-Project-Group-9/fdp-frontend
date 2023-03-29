@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Avatar, Layout, Menu } from "antd";
 import { LogoutOutlined } from '@ant-design/icons';
-import { ADMIN_NAVMENU_OPTIONS, COORDINATOR_NAVMENU_OPTIONS, OPEN_ROUTES, PARTICIPANT_NAVMENU_OPTIONS, ROLE_NAMES } from "../../utils/constants";
+import { ADMIN_NAVMENU_OPTIONS, COORDINATOR_NAVMENU_OPTIONS, OPEN_ROUTES, PARTICIPANT_NAVMENU_OPTIONS, ROLE_NAMES, ROUTES } from "../../utils/constants";
 import { getJWTData, logout } from "../../utils/helper";
 
 import styles from './PageLayout.module.css';
 import UserProfile from '../../assets/images/profile.png';
+import { useDispatch } from 'react-redux';
+import { LOGOUT_ACTION_TYPE } from '../../redux/constants';
 
 const { Sider, Content } = Layout;
 
@@ -62,10 +64,11 @@ const findOpenMenuKey = (menuItems, pathname) => {
 const PageLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
 
     const menuItems = SideMenuOptions();
 
-    const [openMenuKeys, setOpenMenuKeys] = useState([findOpenMenuKey(menuItems, location.pathname)]);
+    const [openMenuKeys, setOpenMenuKeys] = useState([findOpenMenuKey(menuItems, location.pathname.includes('/workshop') ? ROUTES.My_WORKSHOP : location.pathname)]);
 
     const navigationChangeHandler = (event) => {
         navigate(event.key);
@@ -77,6 +80,7 @@ const PageLayout = () => {
 
     const logoutHandler = () => {
         logout(); 
+        dispatch({type: LOGOUT_ACTION_TYPE});
         navigate("/login");   
     };
 
@@ -93,7 +97,7 @@ const PageLayout = () => {
                     theme = {"dark"} 
                     onClick = {navigationChangeHandler} 
                     items = {menuItems} 
-                    selectedKeys = {[location.pathname]} 
+                    selectedKeys = {[location.pathname.includes('/workshop') ? ROUTES.My_WORKSHOP : location.pathname]} 
                     openKeys = {openMenuKeys} 
                     onOpenChange = {onSubMenuOpenChangeHandler}
                 />
