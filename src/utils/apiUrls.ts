@@ -9,6 +9,7 @@ export enum UMS_API_URLS {
 export enum WORKSHOP_API_URLS {
     COORDINATOR_DETAILS = '/workshop/create-workshop/coordinator-details',
     INSTITUTE_DETAILS = '/workshop/create-workshop/institute-details',
+    USER_WORKSHOPS = '/workshop/user-workshops'
 };
 
 export enum SPECIALIZATION_API_URLS {

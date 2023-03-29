@@ -12,6 +12,7 @@ import Building from '../../../assets/images/building.png';
 import EditPersonalDetailsModal from '../EditPersonalDetailsModal/EditPersonalDetailsModal';
 import EditExtraDetailsModal from '../EditExtraDetailsModal/EditExtraDetailsModal';
 import EditInstituteDetailsModal from '../EditInstituteDetailsModal/EditInstituteDetailsModal';
+import NoDataText from '../../Extras/NoDataText';
 
 const { Text, Title } = Typography;
 
@@ -66,7 +67,6 @@ const profileDetailsContent = (userData, setShowModal) => {
 };
 
 const extraProfileDetailsContent = (userData, isCoordinator, setShowExtraProfileDetails, setEditDetails) => {
-    const notAvailable = <Text type = {"secondary"} className = {"font-size-12"}>No Data</Text>;
     const data = {
         ['Father Name']: userData?.personal_details?.father_name,
         ['Alternate Email-id']: userData?.personal_details?.alternate_email_id,
@@ -84,7 +84,7 @@ const extraProfileDetailsContent = (userData, isCoordinator, setShowExtraProfile
     let isEmpty = true;
     Object.entries(data).forEach(([key, value]) => {
         if(!value) {
-            data[key] = notAvailable;
+            data[key] = <NoDataText />;
         }
         else {
             isEmpty = false;
@@ -145,8 +145,6 @@ const extraProfileDetailsContent = (userData, isCoordinator, setShowExtraProfile
 };
 
 const instituteDetailsContent = (userData, isCoordinator, apiCallStatus, setShowEditInstituteDetails, setEditDetails) => {
-    const notAvailable = <Text type = {"secondary"} className = {"font-size-12"}>No Data</Text>;
-
     const data = {
         ['Institute Name']: userData?.institute_details?.institute_name,
         ['Institute Type']: userData?.institute_details?.institute_type,
@@ -159,7 +157,7 @@ const instituteDetailsContent = (userData, isCoordinator, apiCallStatus, setShow
     let isEmpty = true;
     Object.entries(data).forEach(([key, value]) => {
         if(!value) {
-            data[key] = notAvailable;
+            data[key] = <NoDataText />;
         }
         else {
             isEmpty = false;

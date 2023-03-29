@@ -5,3 +5,9 @@ export enum USER_ASYNC_THUNK_ACTION_TYPE_PREFIX_ENUM {
     MODIFY_COORDINATOR_EXTRA_DETAILS = 'user/coordinator/extra-details',
     MODIFY_INSTITUTE_DETAILS = 'user/institute/details'
 };
+
+export enum WORKSHOP_ASYNC_THUNK_ACTION_TYPE_PREFIX_ENUM {
+    FETCH_USER_WORKSHOPS = 'workshop/user-workshops'
+};
+
+export const LOGOUT_ACTION_TYPE = 'logout';
