@@ -35,6 +35,7 @@ export const modifyCoordinatorExtraDetailsThunk = async ({
         params.set('edit', edit);
         params.set('update_workshop', updateWorkshop);
         await requestHandler.put(createQueryParamsUrl(WORKSHOP_API_URLS.COORDINATOR_DETAILS, params), data);
+        return Promise.resolve('Success');
     }
     catch(error) {
         return Promise.reject(error);
@@ -51,6 +52,7 @@ export const modifyInstituteDetailsThunk = async ({
         params.set('edit', edit);
         params.set('update_workshop', updateWorkshop);
         await requestHandler.put(createQueryParamsUrl(WORKSHOP_API_URLS.INSTITUTE_DETAILS, params), data);
+        return Promise.resolve('Success');
     }
     catch(error) {
         return Promise.reject(error);

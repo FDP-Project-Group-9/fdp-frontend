@@ -20,7 +20,7 @@ const EditInstituteDetailsModal = ({
     const dispatch = useDispatch();
 
     const data = {
-        aicte_approved: userData?.institute_details?.aicte_approved || null,
+        aicte_approved: userData?.institute_details?.aicte_approved != undefined ? userData?.institute_details?.aicte_approved : null,
         institute_name: userData?.institute_details?.institute_name || null,
         institute_type: userData?.institute_details?.institute_type || null,
         institute_address: userData?.institute_details?.institute_address || null,

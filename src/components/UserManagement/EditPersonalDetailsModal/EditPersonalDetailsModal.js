@@ -4,7 +4,7 @@ import moment from "moment";
 import dayjs from "dayjs";
 
 import { selectUserData, selectUserApiCallStatus, updateUserDetails } from "../../../redux/slices/user-slice";
-import { getUserId, isLoading } from "../../../utils/helper";
+import { formatDayJsDate, getUserId, isLoading } from "../../../utils/helper";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -17,7 +17,7 @@ const EditPersonalDetailsModal = ({
     const userData = useSelector(selectUserData);
     const apiCallStatus = useSelector(selectUserApiCallStatus);
 
-    const [form] = Form.useForm();
+const [form] = Form.useForm();
     const dispatch = useDispatch();
 
     const data = {
@@ -25,14 +25,14 @@ const EditPersonalDetailsModal = ({
         last_name: userData?.personal_details?.last_name || null,
         email_id: userData?.personal_details?.email_id || null,
         mobile_no: userData?.personal_details?.mobile_no || null,
-        dob: dayjs(moment(new Date(userData?.personal_details?.dob)).format('DD-MM-YYYY'), 'DD-MM-YYYY') || null,
+        dob: formatDayJsDate(userData?.personal_details?.dob || null),
         title: userData?.personal_details?.title || null,
         gender: userData?.personal_details?.gender || null
     }
 
     const onSubmitHandler = async () => {
         try {
-            form.validateFields();
+            await form.validateFields();
             const data = form.getFieldsValue();
             data.dob = data.dob.format('YYYY-MM-DD');
             await dispatch(updateUserDetails({ 

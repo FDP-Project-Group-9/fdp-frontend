@@ -52,7 +52,7 @@ const makeRequest = async (url, data, method) => {
 
 export const requestHandler = {
     get: (url) => makeRequest(url, {}, API_METHODS.GET),
-    post: (url, data) => makeRequest(url, data, API_METHODS.POST),
-    put: (url, data) => makeRequest(url, data, API_METHODS.PUT),
-    delete: (url, data) => makeRequest(url, data, API_METHODS.DELETE)
+    post: (url, data = {}) => makeRequest(url, data, API_METHODS.POST),
+    put: (url, data = {}) => makeRequest(url, data, API_METHODS.PUT),
+    delete: (url, data = {}) => makeRequest(url, data, API_METHODS.DELETE)
 };

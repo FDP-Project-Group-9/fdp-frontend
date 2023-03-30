@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Card, Descriptions, Row, Col, Typography, Space, Button, Divider, Empty, Avatar } from 'antd'; 
+import { Card, Descriptions, Row, Col, Typography, Space, Button, Divider, Avatar } from 'antd'; 
 import { EditOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 
 import styles from './Profile.module.css';
@@ -13,6 +13,7 @@ import EditPersonalDetailsModal from '../EditPersonalDetailsModal/EditPersonalDe
 import EditExtraDetailsModal from '../EditExtraDetailsModal/EditExtraDetailsModal';
 import EditInstituteDetailsModal from '../EditInstituteDetailsModal/EditInstituteDetailsModal';
 import NoDataText from '../../Extras/NoDataText';
+import Empty from '../../Extras/Empty';
 
 const { Text, Title } = Typography;
 
@@ -148,7 +149,7 @@ const instituteDetailsContent = (userData, isCoordinator, apiCallStatus, setShow
     const data = {
         ['Institute Name']: userData?.institute_details?.institute_name,
         ['Institute Type']: userData?.institute_details?.institute_type,
-        ['AICTE Approved']: userData?.institute_details?.aicte_approved && 'Yes',
+        ['AICTE Approved']: userData?.institute_details?.aicte_approved != undefined && userData?.institute_details?.aicte_approved ? 'Yes': 'No',
         ['Institute Address']: userData?.institute_details?.institute_address,
         ['District Name']: userData?.institute_details?.district_name,
         ['State Name']: userData?.institute_details?.state_name
@@ -263,9 +264,7 @@ const apiCallStatus = useSelector(selectUserApiCallStatus);
                     apiStatusFailed(apiCallStatus)
                     ?
                         <Col span = {18}>
-                            <Card>
-                                <Empty description = {"Could not load data, Please try again later!"}/>
-                            </Card>
+                            <Empty />
                         </Col>
                     :
                         <>

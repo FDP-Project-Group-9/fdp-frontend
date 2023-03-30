@@ -17,3 +17,28 @@ export const fetchCoordinatorWorkshopsThunk = async ( _, { getState }) => {
         return Promise.reject(error);
     }
 };
+
+export const fetchWorkshopDetailsThunk = async (workshopId) => {
+  try {
+    const responseData = await requestHandler.get(WORKSHOP_API_URLS.WORKSHOP_DETAILS + '/' + workshopId);
+    return responseData.data;
+  } 
+  catch(error) {
+    return Promise.reject(error);
+  } 
+};
+
+export const modifyWorkshopDetailsThunk = async ({
+  edit, 
+  data
+}) => {
+  try {
+    const params = new Map();
+    params.set('edit', edit);
+    await requestHandler.put(createQueryParamsUrl(WORKSHOP_API_URLS.MODIFY_WORKSHOP_DETAILS, params), data);
+    return Promise.resolve('Success');
+  }
+  catch(error) {
+    return Promise.reject(error);
+  }
+};
