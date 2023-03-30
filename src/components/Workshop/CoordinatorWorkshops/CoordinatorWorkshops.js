@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Typography, Card, Skeleton, Divider, List, Spin, Descriptions, Tag } from "antd";
@@ -9,7 +9,9 @@ import {
     selectWorkshopApiCallStatus,
     selectTotalWorkshopsCountData,
     fetchCoordinatorWorkshops,
-    nextPage
+    nextPage,
+    resetUserWorkshopData,
+    resetPaginationObj
  } from "../../../redux/slices/workshop-slice";
 import styles from './CoordinatorWorkshops.module.css';
 import { formatDate, isLoading } from "../../../utils/helper";
@@ -44,10 +46,14 @@ const CoordinatorWorkshops = (props) => {
         catch(error) {}
     };
 
+    const initializerFunction = async () => {
+        await dispatch(resetPaginationObj());
+        await dispatch(resetUserWorkshopData());
+        loadMoreWorkshops();
+    };
+
     useEffect(() => {
-        if(workshopsData.length == 0) {
-            loadMoreWorkshops();
-        }
+        initializerFunction();
     }, []);
 
     const dispatch = useDispatch();

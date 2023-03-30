@@ -24,6 +24,7 @@ export enum OPEN_ROUTES {
     LOGIN = '/login',
     SIGNUP = '/signup',
     UPLOAD_DOCS = '/upload-docs',
+    PARENT_ROUTE = '',
     NO_MATCH = '*'
 };
 

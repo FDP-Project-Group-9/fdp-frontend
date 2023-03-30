@@ -8,9 +8,13 @@ import { ADMIN_ROUTES, OPEN_ROUTES, ROLE_NAMES, ROUTES } from '../utils/constant
 import AuthRoute from './AuthRoute';
 import RoleAuthRoute from './RoleAuthRoute';
 import { getJWTData, isLoggedIn } from '../utils/helper';
+
 import CoordinatorSignupDocs from '../components/UserManagement/CoordinatorSignupDocs/CoordinatorSignupDocs';
 import Profile from '../components/UserManagement/Profile/Profile';
 import CoordinatorWorkshops from '../components/Workshop/CoordinatorWorkshops/CoordinatorWorkshops';
+import WorkshopForm from '../components/Workshop/CreateWorkshop/WorkshopForm';
+import CreateWorkshopContainer from '../components/Workshop/CreateWorkshop/CreateWorkshopContainer';
+import CreateWorkshopInit from '../components/Workshop/CreateWorkshop/CreateWorkshopInit';
 
 const AppRoutes = (props) => {
     const roleName = isLoggedIn() ? getJWTData().role_name : "";
@@ -31,9 +35,12 @@ const AppRoutes = (props) => {
                             <Route path = {ROUTES.ALL_WORKSHOPS} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.My_WORKSHOP}>
                                 <Route path = {":workshopId"} element = {<h1>hi</h1>} />
-                                <Route path = {""} element = {<CoordinatorWorkshops />} />
+                                <Route path = {OPEN_ROUTES.PARENT_ROUTE} element = {<CoordinatorWorkshops />} />
                             </Route>
-                            <Route path = {ROUTES.CREATE_WORKSHOP} element = {<h1>fewffef</h1>} />
+                            <Route path = {ROUTES.CREATE_WORKSHOP} element = {<CreateWorkshopContainer />}>
+                                <Route path = {":workshopId"} element = {<WorkshopForm />} />
+                                <Route path = {OPEN_ROUTES.PARENT_ROUTE} element = {<CreateWorkshopInit />} />
+                            </Route>
                             <Route path = {ROUTES.RESOURCE_PERSON} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.PARTICIPANTS} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.FEEDBACK} element = {<h1>fewffef</h1>} />

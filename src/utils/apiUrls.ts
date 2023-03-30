@@ -9,7 +9,13 @@ export enum UMS_API_URLS {
 export enum WORKSHOP_API_URLS {
     COORDINATOR_DETAILS = '/workshop/create-workshop/coordinator-details',
     INSTITUTE_DETAILS = '/workshop/create-workshop/institute-details',
-    USER_WORKSHOPS = '/workshop/user-workshops'
+    USER_WORKSHOPS = '/workshop/user-workshops',
+    CREATE_WORKSHOP_DRAFT = '/workshop/create-workshop/draft',
+    WORKSHOP_DETAILS = '/workshop',
+    MODIFY_WORKSHOP_DETAILS = '/workshop/create-workshop/workshop-details',
+    GET_WORKSHOP_APPLICATION_SUBMIT_OTP = '/workshop/create-workshop/otp',
+    VERIFY_WORKSHOP_APPLICATION_SUBMIT_OTP = '/workshop/create-workshop/verify-otp',
+    SUBMIT_WORKSHOP_APPLICATION = '/workshop/create-workshop'
 };
 
 export enum SPECIALIZATION_API_URLS {
