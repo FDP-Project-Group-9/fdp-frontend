@@ -1,0 +1,18 @@
+.parent-container {
+    max-height: 76vh;
+}
+
+.profile-card-container {
+    max-height: 58vh;
+    padding: 10px 2px;
+    overflow: auto;
+}
+
+.profile-card-container::-webkit-scrollbar {
+    width: 0px;
+}
+
+.filters-container {
+    height: 76vh;
+}
+

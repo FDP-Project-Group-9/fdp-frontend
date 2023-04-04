@@ -53,7 +53,8 @@ export enum ROUTES {
     ATTENDANCE = "/workshop/attendance",
     MY_PROFILE = "/my-profile",
     MANDATE_DOCS = "/mandate-docs",
-    FINANCES = "/finances"
+    FINANCES = "/finances",
+    COORDINATORS = "/coordinators"
 };
 
 export enum PARTICIPANT_ROUTES {
@@ -61,13 +62,25 @@ export enum PARTICIPANT_ROUTES {
     DASHBOARD = "/participant/dashboard"
 };
 
-export enum ADMIN_ROUTES {
-    BASE = "/admin",
-    DASHBOARD = "/admin/dashboard"
-};
-
 export const ADMIN_NAVMENU_OPTIONS = {
-
+    WORKSHOP: {
+        label: 'All Workshop',
+        key: ROUTES.ALL_WORKSHOPS,
+        icon: null,
+        children: null
+    },
+    USERS: {
+        label: 'Coordinators',
+        key: ROUTES.COORDINATORS,
+        icon: null,
+        children: null
+    },
+    PROFILE: {
+        label: 'Profile',
+        key: ROUTES.MY_PROFILE,
+        icon: null,
+        children: null
+    }
 };
 
 const COORDINATOR_WORKSHOP_NAV_OPTIONS = [

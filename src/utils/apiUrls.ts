@@ -2,8 +2,11 @@ export enum UMS_API_URLS {
     LOGIN = '/ums/login',
     SIGNUP = '/ums/signup',
     USER_DETAILS = '/ums/user-details',
-    UPLOAD_FILES = '/ums/upload-files',
-    UPDATE_PROFILE = '/ums/update-profile'
+    UPLOAD_REGISTRATION_DOC = '/ums/upload/registration-doc',
+    UPDATE_PROFILE = '/ums/update-profile',
+    COORDINATORS = '/ums/coordinators',
+    GET_REGISTRATION_DOCUMENT = '/ums/view/registration-doc',
+    APPROVE_COORDINATOR = '/ums/approve-registration'
 };
 
 export enum WORKSHOP_API_URLS {

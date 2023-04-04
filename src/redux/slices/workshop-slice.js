@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_STATUS_ENUM } from "../../utils/constants";
-import { fetchCoordinatorWorkshopsThunk, fetchWorkshopDetailsThunk, modifyWorkshopDetailsThunk } from "../async-reducers/workshop-async-reducers";
+import { fetchAllWorkshopsThunk, fetchCoordinatorWorkshopsThunk, fetchWorkshopDetailsThunk, modifyWorkshopDetailsThunk } from "../async-reducers/workshop-async-reducers";
 import { WORKSHOP_ASYNC_THUNK_ACTION_TYPE_PREFIX_ENUM } from "../constants";
 
 const initialState = {
     //array to contain all the user workshops
-    UserWorkshopsData: [],
+    userWorkshopsData: [],
+    // array to store all workshops data
+    allWorkshopsData: [],
     //object to contain the details of a single workshop
     singleWorkshopData: {
          //object to store coordinator details
@@ -38,6 +40,9 @@ const initialState = {
 // reducer thunk function to fetch coordinator workshops using pagination
 export const fetchCoordinatorWorkshops = createAsyncThunk(WORKSHOP_ASYNC_THUNK_ACTION_TYPE_PREFIX_ENUM.FETCH_USER_WORKSHOPS, fetchCoordinatorWorkshopsThunk);
 
+// reducer thunk function to fetch all the workshops using pagination
+export const fetchAllWorkshops = createAsyncThunk(WORKSHOP_ASYNC_THUNK_ACTION_TYPE_PREFIX_ENUM.FETCH_ALL_WORKSHOPS, fetchAllWorkshopsThunk);
+
 // reducer thunk function to fetch workshop details
 export const fetchWorkshopDetails = createAsyncThunk(WORKSHOP_ASYNC_THUNK_ACTION_TYPE_PREFIX_ENUM.FETCH_WORKSHOP_DETAILS, fetchWorkshopDetailsThunk);
 
@@ -55,7 +60,7 @@ const workshopSlice = createSlice({
             state.paginationObj.perPage = action.payload;
         },
         resetUserWorkshopData: (state, action) => {
-            state.UserWorkshopsData = [];
+            state.userWorkshopsData = [];
         },
         resetPaginationObj: (state, action) => {
             state.paginationObj = {
@@ -63,6 +68,9 @@ const workshopSlice = createSlice({
                 perPage: 10,
                 totalWorkshopsCount: 0,
             };
+        },
+        resetAllWorkshopsData: (state, action) => {
+            state.allWorkshopsData = [];
         }
     },
     extraReducers(builders) {
@@ -72,7 +80,7 @@ const workshopSlice = createSlice({
             state.status = API_STATUS_ENUM.LOADING;
         })
         .addCase(fetchCoordinatorWorkshops.fulfilled, (state, action) => {
-            state.UserWorkshopsData = [...state.UserWorkshopsData, ...action.payload.workshops];
+            state.userWorkshopsData = [...state.userWorkshopsData, ...action.payload.workshops];
             state.paginationObj.totalWorkshopsCount = action.payload.total_workshops_count || 0;
             state.status = API_STATUS_ENUM.SUCCESS;
         })
@@ -96,6 +104,18 @@ const workshopSlice = createSlice({
         .addCase(fetchWorkshopDetails.rejected, (state, action) => {
             state.status = API_STATUS_ENUM.FAILED;
         })
+        //reducers for fetching all workshops
+        .addCase(fetchAllWorkshops.pending, (state, action) => {
+            state.status = API_STATUS_ENUM.LOADING;
+        })
+        .addCase(fetchAllWorkshops.fulfilled, (state, action) => {
+            state.allWorkshopsData = [...state.allWorkshopsData, ...action.payload.workshops];
+            state.paginationObj.totalWorkshopsCount = action.payload.total_workshops_count || 0;
+            state.status = API_STATUS_ENUM.SUCCESS;
+        })
+        .addCase(fetchAllWorkshops.rejected, (state, action) => {
+            state.status = API_STATUS_ENUM.FAILED;
+        })
         //reducers for modifying workshop details
         .addCase(modifyWorkshopDetails.pending, (state, action) => {
             state.status = API_STATUS_ENUM.LOADING;
@@ -112,8 +132,11 @@ const workshopSlice = createSlice({
 // selector function to select workshop api call status
 export const selectWorkshopApiCallStatus = state => state.workshop.status;
 
-//selector function to select multiple workshop data
-export const selectUserWorkshopsData = state => state.workshop.UserWorkshopsData;
+//selector function to select user workshop data
+export const selectUserWorkshopsData = state => state.workshop.userWorkshopsData;
+
+//selector function to select all workshops data
+export const selectAllWorkshopsData = state => state.workshop.allWorkshopsData;
 
 //selector function to select single workshop data
 export const selectSingleWorkshopData = state => state.workshop.singleWorkshopData;
@@ -153,7 +176,8 @@ export const {
     changeNoOfItemsPerPage, 
     nextPage, 
     resetUserWorkshopData,
-    resetPaginationObj
+    resetPaginationObj,
+    resetAllWorkshopsData
 } = workshopSlice.actions;
 
 export default workshopSlice.reducer;

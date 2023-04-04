@@ -26,6 +26,7 @@ import { openNotificationWithIcon } from "../Extras/Notification";
 import { loginUser, requestHandler } from "../../utils/apiCall";
 import { getJWTData, initializeUserValues, setJwtToken} from "../../utils/helper";
 import { UMS_API_URLS } from "../../utils/apiUrls";
+import { ROUTES } from "../../utils/constants";
 const { Title } = Typography;
 const {Option} = Select;
 const { RangePicker } = DatePicker;
@@ -45,7 +46,7 @@ const SignInForm = () => {
       const response = await requestHandler.post(UMS_API_URLS.LOGIN, user);
       setJwtToken(response.token.split(' ')[1]);
       initializeUserValues();
-      navigate(`/${getJWTData().role_name}/workshops`);
+      navigate(ROUTES.ALL_WORKSHOPS);
     }
     catch(error) {
       console.log(error);

@@ -7,20 +7,34 @@ const RequestInstance = axios.create({
     baseURL: baseAPIUrl
 });
 
-const makeRequest = async (url, data, method) => {
+const makeRequest = async (url, data, method, headers, documents = false) => {
     try {
-        const response = await RequestInstance({
+        const requestConfig = {
             url: url,
             method: method,
             data: data,
             headers: {
-                'Authorization': 'Bearer ' + getToken()
+                'Authorization': 'Bearer ' + getToken(),
+                ...headers
             }
-        });
-        if(method != API_METHODS.GET) {
-            openNotificationWithIcon("success", response.data.msg);
+        };
+        if(documents) {
+            const response = await axios(baseAPIUrl + url, { 
+                method: 'get',
+                responseType: 'blob',
+                headers: {
+                    Authorization: "Bearer " + getToken()
+                }
+            });
+            return response;
         }
-        return response.data;
+        else {
+            const response = await RequestInstance(requestConfig);
+            if(method != API_METHODS.GET) {
+                openNotificationWithIcon("success", response.data.msg);
+            }
+            return response.data;
+        }
     }
     catch(error) {
         const err = new Error();
@@ -52,6 +66,7 @@ const makeRequest = async (url, data, method) => {
 
 export const requestHandler = {
     get: (url) => makeRequest(url, {}, API_METHODS.GET),
+    getDocument: (url) => makeRequest(url, {}, API_METHODS.GET, {}, true),
     post: (url, data = {}) => makeRequest(url, data, API_METHODS.POST),
     put: (url, data = {}) => makeRequest(url, data, API_METHODS.PUT),
     delete: (url, data = {}) => makeRequest(url, data, API_METHODS.DELETE)
