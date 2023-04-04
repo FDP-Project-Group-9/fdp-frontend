@@ -18,7 +18,10 @@ export enum WORKSHOP_API_URLS {
     MODIFY_WORKSHOP_DETAILS = '/workshop/create-workshop/workshop-details',
     GET_WORKSHOP_APPLICATION_SUBMIT_OTP = '/workshop/create-workshop/otp',
     VERIFY_WORKSHOP_APPLICATION_SUBMIT_OTP = '/workshop/create-workshop/verify-otp',
-    SUBMIT_WORKSHOP_APPLICATION = '/workshop/create-workshop'
+    SUBMIT_WORKSHOP_APPLICATION = '/workshop/create-workshop',
+    APPROVE_APPLICATION = '/workshop/approve-application',
+    GET_WORKSHOP_MEDIA_IMAGE_URL = '/workshop/view/media-image',
+    GET_WORKSHOP_IMAGE = '/workshop/view/image'
 };
 
 export enum SPECIALIZATION_API_URLS {

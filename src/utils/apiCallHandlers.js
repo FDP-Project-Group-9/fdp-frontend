@@ -1,5 +1,5 @@
 import { requestHandler } from "./apiCall";
-import { UMS_API_URLS } from "./apiUrls";
+import { UMS_API_URLS, WORKSHOP_API_URLS } from "./apiUrls";
 import { createQueryParamsUrl } from "./helper";
 
 export const fetchCoordinators = async (currentPageNo, perPageSize, profileStatus) => {
@@ -50,4 +50,34 @@ export const approveRejectCoordinator = async (coordinatorId, approve) => {
     catch(error) {
         throw error;
     }
-}
+};
+
+export const approveWorkshop = async (workshopId, approve) => {
+    try {
+        return await requestHandler.put(WORKSHOP_API_URLS.APPROVE_APPLICATION, {
+            workshop_id: workshopId,
+            approve: approve
+        });
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getWorkshopMediaImage = async (fileId) => {
+    try {
+        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_MEDIA_IMAGE_URL + "/" + fileId);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getWorkshopImage = async (fileId) => {
+    try {
+        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_IMAGE + "/" + fileId);
+    }
+    catch(error) {
+        throw error;
+    }
+};

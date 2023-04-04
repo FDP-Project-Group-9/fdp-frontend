@@ -75,6 +75,8 @@ const PageLayout = () => {
             return ROUTES.CREATE_WORKSHOP;
         else if(location.pathname.includes(ROUTES.COORDINATORS))
             return ROUTES.COORDINATORS;
+        else if(location.pathname.includes(ROUTES.ALL_WORKSHOPS))
+            return ROUTES.ALL_WORKSHOPS;
         else
             return location.pathname;
     }

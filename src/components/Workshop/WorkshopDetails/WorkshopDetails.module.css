@@ -1,0 +1,8 @@
+.reject-btn-style {
+    width: 100%;
+}
+
+.images-container {
+    position: sticky !important;
+    top: 24px !important;
+}

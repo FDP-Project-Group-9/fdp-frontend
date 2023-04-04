@@ -19,21 +19,9 @@ import { LoadingOutlined, ReconciliationOutlined } from "@ant-design/icons";
 import { ROUTES } from "../../../utils/constants";
 import NoDataText from "../../Extras/NoDataText";
 import EmptyCard from "../../Extras/Empty";
+import { getWorkshopStatusTag } from "../../Extras/helpers";
 
 const { Title, Text } = Typography;
-
-const getStatusTag = (draft, workshop_completed, workshop_approval_status) => {
-    if(draft) 
-        return <Tag color = "magenta">Draft</Tag>
-    else if(workshop_completed)
-        return <Tag color = "green">Completed</Tag>
-    else if(workshop_approval_status)
-        return <Tag color = "geekblue">Approved By Admin</Tag>
-    else if(workshop_approval_status === null)
-        return <Tag color = "orange">Waiting for Admin Approval</Tag>
-    else 
-        return <Tag color = "red">Rejected</Tag>
-};
 
 const CoordinatorWorkshops = (props) => {
     const workshopsData = useSelector(selectUserWorkshopsData);
@@ -116,7 +104,7 @@ const CoordinatorWorkshops = (props) => {
                                                         <Card title = {item.title || "Untitled"} hoverable>
                                                             <Descriptions column={2}>
                                                                 <Descriptions.Item label = {"Workshop No."}>{item?.workshop_id || <NoDataText />}</Descriptions.Item>
-                                                                <Descriptions.Item label = {"Status"}>{getStatusTag(item?.draft, item?.workshop_completed ,item?.workshop_approval_status)}</Descriptions.Item>
+                                                                <Descriptions.Item label = {"Status"}>{getWorkshopStatusTag(item?.workshop_completed ,item?.workshop_approval_status, item?.draft)}</Descriptions.Item>
                                                                 <Descriptions.Item label = {"Start Date"}>{formatDate(item?.begin_date) || <NoDataText />}</Descriptions.Item>
                                                                 <Descriptions.Item label = {"End Date"}>{formatDate(item?.end_date) || <NoDataText />}</Descriptions.Item>
                                                                 <Descriptions.Item label = {"Workshop Specialization Area"}>{item?.specialization || <NoDataText />}</Descriptions.Item>

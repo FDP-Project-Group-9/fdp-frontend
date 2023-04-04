@@ -17,6 +17,7 @@ import CreateWorkshopInit from '../components/Workshop/CreateWorkshop/CreateWork
 import ListCoordinators from '../components/UserManagement/ListCoordinators/ListCoordinators';
 import CoordinatorProfile from '../components/UserManagement/ListCoordinators/CoordinatorProfile/CoordinatorProfile';
 import AllWorkshops from '../components/Workshop/AllWorkshops/AllWorkshops';
+import WorkshopDetails from '../components/Workshop/WorkshopDetails/WorkshopDetails';
 
 const AppRoutes = (props) => {
     return (
@@ -26,8 +27,11 @@ const AppRoutes = (props) => {
             <Route path = {OPEN_ROUTES.UPLOAD_DOCS} element = {<CoordinatorSignupDocs />} />
             <Route element = {<AuthRoute />}>
                 <Route element = {<PageLayout />}>
-                    {/* ADMINISTRATOR ROUTES */}
-                    <Route path = {ROUTES.ALL_WORKSHOPS} element = {<AllWorkshops />} />
+          w          {/* ADMINISTRATOR ROUTES */}
+                    <Route path = {ROUTES.ALL_WORKSHOPS}>
+                        <Route path = {":workshopId"} element = {<WorkshopDetails />} />
+                        <Route path = {OPEN_ROUTES.PARENT_ROUTE} element = {<AllWorkshops />} />
+                    </Route>
                     <Route path = {ROUTES.MY_PROFILE} element = {<Profile />} />
 
                     <Route element = {<RoleAuthRoute roleName = {ROLE_NAMES.ADMINISTRATOR}/>}>

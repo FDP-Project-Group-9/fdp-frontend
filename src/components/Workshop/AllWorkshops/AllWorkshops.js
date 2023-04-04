@@ -19,33 +19,9 @@ import { LoadingOutlined, ReconciliationOutlined } from "@ant-design/icons";
 import { ROLE_NAMES, ROUTES } from "../../../utils/constants";
 import NoDataText from "../../Extras/NoDataText";
 import EmptyCard from "../../Extras/Empty";
+import { getTimelineStatusTag, getWorkshopStatusTag } from "../../Extras/helpers";
 
 const { Title } = Typography;
-
-const getWorkshopStatusTag = ( workshop_completed, workshop_approval_status) => {
-    if(workshop_completed)
-        return <Tag color = "green">Completed</Tag>
-    else if(workshop_approval_status)
-        return <Tag color = "geekblue">Approved</Tag>
-    else if(workshop_approval_status === null)
-        return <Tag color = "orange">Waiting for Admin Approval</Tag>
-    else 
-        return <Tag color = "red">Rejected</Tag>
-};
-
-const getTimelineStatusTag = (startDate , endDate) => {
-    if(!startDate || !endDate)
-        return null;
-    startDate = new Date(startDate);
-    endDate = new Date(endDate);
-    const currentDate = new Date();
-    if(currentDate < startDate)
-        return <Tag color = "blue">Upcoming</Tag>
-    else if(currentDate > endDate)
-        return <Tag color = "red">Completed</Tag>
-    else
-        return <Tag color = "green">Ongoing</Tag>
-};
 
 const AllWorkshops = (props) => {
     const allWorkshopsData = useSelector(selectAllWorkshopsData);
@@ -123,7 +99,7 @@ const AllWorkshops = (props) => {
                                         <List.Item key={item.workshop_id} className = {["card-container", styles['item-card']].join(' ')}>
                                             <Row style = {{width: '100%'}}>
                                                 <Col span = {24}>
-                                                    <Link to = {ROUTES.My_WORKSHOP + `/${item?.workshop_id || ""}`}>
+                                                    <Link to = {ROUTES.ALL_WORKSHOPS + `/${item?.workshop_id || ""}`}>
                                                         <Card title = {item.title || "Untitled"} hoverable>
                                                             <Descriptions column={2}>
                                                                 <Descriptions.Item label = {"Workshop No."}>{item?.workshop_id || <NoDataText />}</Descriptions.Item>
