@@ -4,19 +4,10 @@ import { Modal, Typography, Form, Input, Row, Col, Select } from "antd";
 
 import { selectUserData, selectUserApiCallStatus, modifyCoordinatorExtraDetails } from "../../../redux/slices/user-slice";
 import { isLoading } from "../../../utils/helper";
-import { requestHandler } from '../../../utils/apiCall';
-import { SPECIALIZATION_API_URLS } from '../../../utils/apiUrls';
+import { fetchSpecializationAreas } from '../../../utils/apiCallHandlers';
 
 const { Title } = Typography;
 const { Option } = Select;
-
-const fetchSpecializationAreas = async (setSpecializationAreas) => {
-    try {
-        const response = await requestHandler.get(SPECIALIZATION_API_URLS.GET_SPECIALIZATIONS);
-        setSpecializationAreas(response.data);
-    }
-    catch(error) {}
-};
 
 const EditExtraDetailsModal = ({
     showModal,

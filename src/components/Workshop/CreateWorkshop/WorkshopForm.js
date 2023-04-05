@@ -9,18 +9,20 @@ import {
   fetchWorkshopDetails,
   modifyWorkshopDetails,
   selectWorkshopDraftStatus,
-  selectWorkshopCoordinatorDetails
+  selectWorkshopCoordinatorDetails,
+  selectWorkshopSpeakersDetails
  } from '../../../redux/slices/workshop-slice';
  import { modifyCoordinatorExtraDetails, modifyInstituteDetails, selectUserApiCallStatus } from '../../../redux/slices/user-slice';
 
 import CoordinatorDetails from './CoordinatorDetails';
-import WorkshopDetails from './WorkshopDetails';
+import WorkshopDetailsForm from './WorkshopDetailsForm';
 import InstituteDetails from './InstituteDetails';
 import { ArrowLeftOutlined, ArrowRightOutlined, DownSquareFilled } from '@ant-design/icons';
 import { apiStatusFailed, getUserId, isLoading } from '../../../utils/helper';
 import Empty from '../../Extras/Empty';
 import { ROUTES } from '../../../utils/constants';
 import OtpVerficationContainer from './OtpVerificationContainer';
+import WorkshopSpeakers from './WorkshopSpeakers';
 
 const WorkshopForm = () => {
   const { token } = theme.useToken();
@@ -38,13 +40,17 @@ const WorkshopForm = () => {
   const userApiCallStatus = useSelector(selectUserApiCallStatus);
   const workshopCoordinatorDetails = useSelector(selectWorkshopCoordinatorDetails);
   const workshopDraftStatus = useSelector(selectWorkshopDraftStatus);
+  const workshopResourcePersonDetails = useSelector(selectWorkshopSpeakersDetails);
   const otpVerified = useSelector(selectWorkshopOTPVerificationStatus);
 
   useEffect(() => {
     (async () => {
       await dispatch(fetchWorkshopDetails(workshopId));
       if(otpVerified && workshopDraftStatus) {
-        setCurrent(3);
+        if(workshopResourcePersonDetails.length > 0)
+          setCurrent(4);
+        else
+          setCurrent(3);
       }
       if( workshopCoordinatorDetails.user_id && workshopCoordinatorDetails.user_id !== Number(getUserId())) {
         setNotAuthorized(true);
@@ -55,6 +61,12 @@ const WorkshopForm = () => {
     })();
   }, [workshopDraftStatus]);
   const next = () => {
+    if(current === 3) {
+      if(workshopResourcePersonDetails.length === 0) {
+        message.error("At least one Speaker should be added to the workshop!");
+        return;
+      }
+    } 
     setCurrent(current + 1);
   };
   const prev = () => {
@@ -120,7 +132,11 @@ const WorkshopForm = () => {
     },
     {
       title: 'Workshop Details',
-      content:  <WorkshopDetails setFormObj = {setFormObj} setExtraApiRequestData = {setExtraApiRequestData}/>,
+      content:  <WorkshopDetailsForm setFormObj = {setFormObj} setExtraApiRequestData = {setExtraApiRequestData}/>,
+    },
+    {
+      title: 'Workshop Speakers',
+      content:  <WorkshopSpeakers />,
     },
     {
       title: 'OTP Verification',
@@ -192,16 +208,16 @@ const WorkshopForm = () => {
                             Previous
                           </Button>
                         )}
-                        {current < steps.length - 1 && (
+                        {current < steps.length - 2 && (
                           <Button type="primary" onClick={onNextClickHandler} icon = {<ArrowRightOutlined />} loading = {isLoading(apiCallStatus) || isLoading(userApiCallStatus)}>
                             Save as Draft
                           </Button>
                         )}
-                        {/* {current === steps.length - 1 && (
-                          <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                            Submit Workshop
+                        {current === 3 && (
+                          <Button type="primary" onClick={onNextClickHandler} icon = {<ArrowRightOutlined />}>
+                            Next
                           </Button>
-                        )} */}
+                        )}
                     </Col>
                   </Row>
                 </>

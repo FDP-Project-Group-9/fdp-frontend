@@ -21,10 +21,17 @@ export enum WORKSHOP_API_URLS {
     SUBMIT_WORKSHOP_APPLICATION = '/workshop/create-workshop',
     APPROVE_APPLICATION = '/workshop/approve-application',
     GET_WORKSHOP_MEDIA_IMAGE_URL = '/workshop/view/media-image',
-    GET_WORKSHOP_IMAGE = '/workshop/view/image'
+    GET_WORKSHOP_IMAGE = '/workshop/view/image',
+    ADD_WORKSHOP_SPEAKER = '/workshop/create-workshop/resource-persons'
 };
 
 export enum SPECIALIZATION_API_URLS {
     GET_SPECIALIZATIONS = '/workshop/specializations',
     ADD_SPECIALIZATION = '/workshop/specialization'
+};
+
+export enum RESOURCE_PERSON_API_URLS {
+    GET_ALL_RESOURCE_PERSONS = '/resource-person/fetch-details',
+    GET_RESOURCE_PERSON_DETAILS = '/resource-person/fetch',
+    MODIFY_RESOURCE_PERSON = '/resource-person/add'
 };

@@ -16,6 +16,8 @@ const initialState = {
          instituteDetails: {},
          //object to store workshop details
          workshopDetails: {},
+         //array to store the details of workshop speakers
+         workshopSpeakers: [],
          //object to store co-coordinator details
          coCoordinatorDetails: {},
          //object to store files url's
@@ -96,6 +98,7 @@ const workshopSlice = createSlice({
             state.singleWorkshopData.coCoordinatorDetails = action.payload.co_coordinator_details;
             state.singleWorkshopData.instituteDetails = action.payload.institute_details;
             state.singleWorkshopData.workshopDetails = action.payload.workshop_details;
+            state.singleWorkshopData.workshopSpeakers = action.payload.resource_persons;
             state.singleWorkshopData.files = action.payload.files_url;
             state.singleWorkshopData.draft = action.payload.draft;
             state.singleWorkshopData.otpVerified = action.payload.otp_verified;
@@ -158,6 +161,9 @@ export const selectWorkshopCoCoordinatorDetails = state => state.workshop.single
 
 //selector function to select workshop institute details
 export const selectWorkshopInstituteDetails = state => state.workshop.singleWorkshopData.instituteDetails;
+
+//selector function to select workshop speakers details
+export const selectWorkshopSpeakersDetails = state => state.workshop.singleWorkshopData.workshopSpeakers;
 
 //selector function to select workshop details
 export const selectWorkshopDetails = state => state.workshop.singleWorkshopData.workshopDetails;
