@@ -68,7 +68,20 @@ const PageLayout = () => {
 
     const menuItems = SideMenuOptions();
 
-    const [openMenuKeys, setOpenMenuKeys] = useState([findOpenMenuKey(menuItems, location.pathname.includes('/workshop') ? ROUTES.My_WORKSHOP : location.pathname.includes('/create-workshop') ? ROUTES.CREATE_WORKSHOP :location.pathname)]);
+    const selectedMenuKeyHandler = () => {
+        if(location.pathname.includes(ROUTES.My_WORKSHOP))
+            return ROUTES.My_WORKSHOP;
+        else if(location.pathname.includes(ROUTES.CREATE_WORKSHOP))
+            return ROUTES.CREATE_WORKSHOP;
+        else if(location.pathname.includes(ROUTES.COORDINATORS))
+            return ROUTES.COORDINATORS;
+        else if(location.pathname.includes(ROUTES.ALL_WORKSHOPS))
+            return ROUTES.ALL_WORKSHOPS;
+        else
+            return location.pathname;
+    }
+
+    const [openMenuKeys, setOpenMenuKeys] = useState([findOpenMenuKey(menuItems, selectedMenuKeyHandler())]);
 
     const navigationChangeHandler = (event) => {
         navigate(event.key);
@@ -97,7 +110,7 @@ const PageLayout = () => {
                     theme = {"dark"} 
                     onClick = {navigationChangeHandler} 
                     items = {menuItems} 
-                    selectedKeys = {[location.pathname.includes('/workshop') ? ROUTES.My_WORKSHOP : location.pathname.includes('/create-workshop') ? ROUTES.CREATE_WORKSHOP : location.pathname]} 
+                    selectedKeys = {[selectedMenuKeyHandler()]} 
                     openKeys = {openMenuKeys} 
                     onOpenChange = {onSubMenuOpenChangeHandler}
                 />

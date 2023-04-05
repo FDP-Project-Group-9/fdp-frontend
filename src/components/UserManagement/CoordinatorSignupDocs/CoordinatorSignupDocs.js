@@ -18,12 +18,11 @@ const CoordinatorSignupDocs = () => {
     const navigate = useNavigate();
 
     const uploadProps = {
-        name: 'docs',
+        name: 'registration_doc',
         multiple: true,
-        maxCount: 2,
+        maxCount: 1,
         beforeUpload: () => false,
         onChange: (fileInfo) => {
-            console.log(fileInfo);
             const filesData = fileInfo.fileList.map(file => file.originFileObj);
             setFiles(filesData);
         },
@@ -35,8 +34,8 @@ const CoordinatorSignupDocs = () => {
         try {
             const formData = new FormData();
             formData.append('email_id', emailId);
-            files.forEach(file => formData.append('docs', file));
-            await requestHandler.post(UMS_API_URLS.UPLOAD_FILES, formData);
+            files.forEach(file => formData.append('registration_doc', file));
+            await requestHandler.post(UMS_API_URLS.UPLOAD_REGISTRATION_DOC, formData);
             message.success("The Administrator has been notified about your registration!");
             setTimeout(() => {
                 navigate("/login");   

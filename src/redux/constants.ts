@@ -9,7 +9,8 @@ export enum USER_ASYNC_THUNK_ACTION_TYPE_PREFIX_ENUM {
 export enum WORKSHOP_ASYNC_THUNK_ACTION_TYPE_PREFIX_ENUM {
     FETCH_USER_WORKSHOPS = 'workshop/user-workshops',
     FETCH_WORKSHOP_DETAILS = 'workshop/details',
-    MODIFY_WORKSHOP_DETAILS = 'workshop/modify-workshop-details'
+    MODIFY_WORKSHOP_DETAILS = 'workshop/modify-workshop-details',
+    FETCH_ALL_WORKSHOPS = 'workshops/all'
 };
 
 export const LOGOUT_ACTION_TYPE = 'logout';
