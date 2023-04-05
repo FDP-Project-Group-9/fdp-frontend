@@ -30,7 +30,7 @@ const CreateWorkshopInit = () => {
                 >
                     <Space direction="vertical" size = {8} align = "center">
                         <Title level={4} className = "no-margin">Let's begin the application process!</Title>
-                        <Text type="secondary">Creating a workshop is easy, all you have to do is go through 3 steps and submit your application,</Text>
+                        <Text type="secondary">Creating a workshop is easy, all you have to do is go through 5 steps and submit your application,</Text>
                         <Text type="secondary">then wait for the <b>Administrator</b> to approve your workshop!</Text>
                         <Button style = {{marginTop: "20px"}}
                             type = {"primary"}

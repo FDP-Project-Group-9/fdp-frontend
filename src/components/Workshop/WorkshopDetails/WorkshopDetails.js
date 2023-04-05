@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Row, Col, Typography, Card, Carousel, Divider, Space, Button, Popconfirm, Result, Descriptions, Empty, Skeleton, Image } from 'antd';
+import { Row, Col, Typography, Card, Carousel, Divider, Space, Button, Popconfirm, Result, Descriptions, Empty, Skeleton, Image, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { 
@@ -11,7 +11,8 @@ import {
     selectWorkshopDetails, 
     selectWorkshopDraftStatus, 
     selectWorkshopFilesDetails, 
-    selectWorkshopInstituteDetails 
+    selectWorkshopInstituteDetails, 
+    selectWorkshopSpeakersDetails
 } from '../../../redux/slices/workshop-slice';
 
 import { apiStatusFailed, formatDate, getJWTData, isLoading } from '../../../utils/helper';
@@ -244,6 +245,64 @@ const WorkshopDetails = () => {
         );
     };
 
+    const WorkshopSpeakers = () => {
+        const workshopSpeakersDetails = useSelector(selectWorkshopSpeakersDetails);
+
+        const getTableDataHandler = (workshopSpeakersDetails) => {
+            return workshopSpeakersDetails.map((speakerDetails, index) => ({
+                key: index,
+                name: speakerDetails.person_name,
+                emailId: speakerDetails.email_id,
+                designation: speakerDetails.designation,
+                specialization: speakerDetails.specialization,
+                organizationName: speakerDetails.organization_name
+            }));
+        };
+
+        const columns = [
+            {
+                title: 'Name',
+                dataIndex: 'name',
+                key: 'name',
+                align: 'center'
+            },
+            {
+                title: 'Email Id',
+                dataIndex: 'emailId',
+                key: 'emailId',
+                align: 'center'
+            },
+            {
+                title: 'Desgination',
+                dataIndex: 'designation',
+                key: 'desgination',
+                align: 'center'
+            },
+            {
+                title: 'Specialization',
+                dataIndex: 'specialization',
+                key: 'specialization',
+                align: 'center'
+            },
+            {
+                title: 'Organization Name',
+                dataIndex: 'organizationName',
+                key: 'organizationName',
+                align: 'center'
+            }
+        ];
+
+        return (
+            <Table
+                dataSource={getTableDataHandler(workshopSpeakersDetails)} 
+                columns={columns} 
+                scroll={{y: 220}} 
+                pagination = {false}
+                bordered
+            />
+        );
+    };
+
     //function to render the main body content 
     const getMainBody = () => {
         let content = null;
@@ -367,6 +426,11 @@ const WorkshopDetails = () => {
                                     :
                                     workshopImagesContent
                             }
+                        </Card>
+                    </Col>
+                    <Col span = {15}>
+                        <Card loading = {isLoading(apiCallStatus)} title = {"Workshop Speakers"}>
+                            <WorkshopSpeakers />
                         </Card>
                     </Col>
                 </>

@@ -17,7 +17,7 @@ const fetchSpecializationAreas = async (setSpecializationAreas) => {
   catch(error) {}
 };
 
-export default function WorkshopDetails({ 
+export default function WorkshopDetailsForm({ 
   setFormObj,
   setExtraApiRequestData
 }) {
@@ -37,7 +37,6 @@ export default function WorkshopDetails({
     mode: workshopDetails.mode || null,
     participant_intake: workshopDetails.participant_intake || null
   };
-  console.log(initialValues);
 
   useEffect(() => {
     setFormObj(form);
@@ -155,20 +154,20 @@ export default function WorkshopDetails({
           </Col>
         </Row>
         <Row>
-        <Col span={12}>
-          <Form.Item
-              label="Total Participant Intake"
-              name="participant_intake"
-              rules={[
-                {
-                  required: true,
-                  message: "Total Participant intake is Required",
-                },
-              ]}
-            >
-              <Input placeholder="100"/>
-            </Form.Item>
-          </Col>
+          <Col span={12}>
+            <Form.Item
+                label="Total Participant Intake"
+                name="participant_intake"
+                rules={[
+                  {
+                    required: true,
+                    message: "Total Participant intake is Required",
+                  },
+                ]}
+              >
+                <Input placeholder="100"/>
+              </Form.Item>
+            </Col>
           </Row>
       </Form>
   );
