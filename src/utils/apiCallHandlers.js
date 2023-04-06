@@ -64,24 +64,6 @@ export const approveWorkshop = async (workshopId, approve) => {
     }
 };
 
-export const getWorkshopMediaImage = async (fileId) => {
-    try {
-        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_MEDIA_IMAGE_URL + "/" + fileId);
-    }
-    catch(error) {
-        throw error;
-    }
-};
-
-export const getWorkshopImage = async (fileId) => {
-    try {
-        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_IMAGE + "/" + fileId);
-    }
-    catch(error) {
-        throw error;
-    }
-};
-
 export const fetchSpecializationAreas = async (setSpecializationAreas) => {
     try {
         const response = await requestHandler.get(SPECIALIZATION_API_URLS.GET_SPECIALIZATIONS);
@@ -140,6 +122,126 @@ export const removeWorkshopSpeaker = async (workshopId, speakerId) => {
         return await requestHandler.delete(WORKSHOP_API_URLS.ADD_WORKSHOP_SPEAKER, {
             workshop_id: workshopId,
             resource_person_id: speakerId
+        });
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getWorkshopMediaImage = async (fileId) => {
+    try {
+        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_MEDIA_IMAGE_URL + "/" + fileId);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getWorkshopImage = async (fileId) => {
+    try {
+        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_IMAGE + "/" + fileId);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getWorkshopReport = async (fileId) => {
+    try{
+        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_REPORT + "/" + fileId);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getWorkshopStmtExpenditure = async (fileId) => {
+    try {
+        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_STMT_EXPENDITURE + "/" + fileId);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const addWorkshopMediaImages = async (formData) => {
+    try {
+        return await requestHandler.put(WORKSHOP_API_URLS.ADD_WORKSHOP_MEDIA_IMAGES, formData);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const addWorkshopImages = async (formData) => {
+    try {
+        return await requestHandler.put(WORKSHOP_API_URLS.ADD_WORKSHOP_IMAGES, formData);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const addWorkshopReport = async (formData) => {
+    try {
+        return await requestHandler.put(WORKSHOP_API_URLS.ADD_WORKSHOP_REPORT, formData);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const addWorkshopStmtExpenditure = async (formData) => {
+    try {
+        return await requestHandler.put(WORKSHOP_API_URLS.ADD_WORKSHOP_STMT_EXPENDITURE, formData);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const deleteWorkshopMediaImage = async (workshopId, fileId) => {
+    try {
+        return await requestHandler.delete(WORKSHOP_API_URLS.DELETE_WORKSHOP_MEDIA_IMAGE, {
+            workshop_id: workshopId, 
+            file_id: fileId
+        });
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const deleteWorkshopImage = async (workshopId, fileId) => {
+    try {
+        return await requestHandler.delete(WORKSHOP_API_URLS.DELETE_WORKSHOP_IMAGE, {
+            workshop_id: workshopId, 
+            file_id: fileId
+        });
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const deleteWorkshopReport = async (workshopId, fileId) => {
+    try {
+        return await requestHandler.delete(WORKSHOP_API_URLS.DELETE_WORKSHOP_REPORT, {
+            workshop_id: workshopId, 
+            file_id: fileId
+        });
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const deleteWorkshopStmtExpendtiure = async (workshopId, fileId) => {
+    try {
+        return await requestHandler.delete(WORKSHOP_API_URLS.DELETE_WORKSHOP_STMT_EXPENDITURE, {
+            workshop_id: workshopId, 
+            file_id: fileId
         });
     }
     catch(error) {

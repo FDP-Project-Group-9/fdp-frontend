@@ -74,7 +74,7 @@ const WorkshopForm = () => {
   };
   
   const viewWorkshopDetailsHandler = () => {
-    navigate(ROUTES.My_WORKSHOP + "/" + workshopId);
+    navigate(ROUTES.MY_WORKSHOP + "/" + workshopId);
   };
 
   const onNextClickHandler = async () => {
@@ -175,7 +175,7 @@ const WorkshopForm = () => {
                 extra = {
                   <Button
                     type = {"primary"}
-                    onClick = {() => navigate(ROUTES.My_WORKSHOP)}
+                    onClick = {() => navigate(ROUTES.MY_WORKSHOP)}
                   >
                     View Your Workshops
                   </Button>

@@ -18,6 +18,7 @@ import ListCoordinators from '../components/UserManagement/ListCoordinators/List
 import CoordinatorProfile from '../components/UserManagement/ListCoordinators/CoordinatorProfile/CoordinatorProfile';
 import AllWorkshops from '../components/Workshop/AllWorkshops/AllWorkshops';
 import WorkshopDetails from '../components/Workshop/WorkshopDetails/WorkshopDetails';
+import DetailsContainer from '../components/Workshop/CoordinatorWorkshopDetails/DetailsContainer';
 
 const AppRoutes = (props) => {
     return (
@@ -27,7 +28,7 @@ const AppRoutes = (props) => {
             <Route path = {OPEN_ROUTES.UPLOAD_DOCS} element = {<CoordinatorSignupDocs />} />
             <Route element = {<AuthRoute />}>
                 <Route element = {<PageLayout />}>
-          w          {/* ADMINISTRATOR ROUTES */}
+                    {/* ADMINISTRATOR ROUTES */}
                     <Route path = {ROUTES.ALL_WORKSHOPS}>
                         <Route path = {":workshopId"} element = {<WorkshopDetails />} />
                         <Route path = {OPEN_ROUTES.PARENT_ROUTE} element = {<AllWorkshops />} />
@@ -42,9 +43,12 @@ const AppRoutes = (props) => {
                     </Route>
                     {/* COORDINATOR ROUTES */}
                     <Route element = {<RoleAuthRoute roleName = {ROLE_NAMES.COORDINATOR}/>}>
-                            {/* <Route path = {ROUTES.ALL_WORKSHOPS} element = {<h1>fewffef</h1>} /> */}
-                            <Route path = {ROUTES.My_WORKSHOP}>
-                                <Route path = {":workshopId"} element = {<h1>hi</h1>} />
+                            <Route path = {ROUTES.MY_WORKSHOP}>
+                                <Route element = {<DetailsContainer />}>
+                                    <Route path = {":workshopId"} element = {<WorkshopDetails coordinatorWorkshop = {true}/>} />
+                                    <Route path = {ROUTES.PARTICIPANTS + "/:workshopId"} element = {<h1>Participants</h1>}/>
+                                    <Route path = {ROUTES.QUIZ + "/:workshopId"} element = {<h1>Quiz</h1>}/>
+                                </Route>
                                 <Route path = {OPEN_ROUTES.PARENT_ROUTE} element = {<CoordinatorWorkshops />} />
                             </Route>
                             <Route path = {ROUTES.CREATE_WORKSHOP} element = {<CreateWorkshopContainer />}>
@@ -56,14 +60,12 @@ const AppRoutes = (props) => {
                             <Route path = {ROUTES.FEEDBACK} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.CERTIFICATE} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.ATTENDANCE} element = {<h1>fewffef</h1>} />
-                            {/* <Route path = {ROUTES.MY_PROFILE} element = {<Profile />} /> */}
                             <Route path = {ROUTES.MANDATE_DOCS} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.FINANCES} element = {<h1>fewffef</h1>} />
                         {/* </Route> */}
                     </Route>
                     {/* PARTICIPANT ROUTES */}
                     <Route element = {<RoleAuthRoute roleName = {ROLE_NAMES.PARTICIPANT}/>}>
-                        {/* <Route element = {<ParticipantRoutes />} /> */}
                     </Route>
                 </Route>
                 <Route path = {OPEN_ROUTES.NO_MATCH} element = {<Navigate to = {ROUTES.ALL_WORKSHOPS}/>} />

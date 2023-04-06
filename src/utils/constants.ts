@@ -43,12 +43,13 @@ export enum OPEN_ROUTES {
 
 export enum ROUTES {
     // BASE = "/coordinator",
-    My_WORKSHOP = "/workshop",
+    MY_WORKSHOP = "/workshop",
     ALL_WORKSHOPS = "/all-workshops",
     CREATE_WORKSHOP = "/create-workshop",
     RESOURCE_PERSON = "/workshop/resource-person",
     PARTICIPANTS = "/workshop/participants",
     FEEDBACK = "/workshop/feedback",
+    QUIZ = "/workshop/quiz",
     CERTIFICATE = "/workshop/certificate",
     ATTENDANCE = "/workshop/attendance",
     MY_PROFILE = "/my-profile",
@@ -92,7 +93,7 @@ const COORDINATOR_WORKSHOP_NAV_OPTIONS = [
     },
     {
         label: 'My Workshops',
-        key: ROUTES.My_WORKSHOP,
+        key: ROUTES.MY_WORKSHOP,
         icon: null,
         children: null
     },

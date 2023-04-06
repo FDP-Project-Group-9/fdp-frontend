@@ -22,7 +22,18 @@ export enum WORKSHOP_API_URLS {
     APPROVE_APPLICATION = '/workshop/approve-application',
     GET_WORKSHOP_MEDIA_IMAGE_URL = '/workshop/view/media-image',
     GET_WORKSHOP_IMAGE = '/workshop/view/image',
-    ADD_WORKSHOP_SPEAKER = '/workshop/create-workshop/resource-persons'
+    GET_WORKSHOP_REPORT = '/workshop/view/report',
+    GET_WORKSHOP_STMT_EXPENDITURE = '/workshop/view/stmt-of-expenditure',
+    ADD_WORKSHOP_SPEAKER = '/workshop/create-workshop/resource-persons',
+    ADD_WORKSHOP_MEDIA_IMAGES = '/workshop/upload/media-images',
+    ADD_WORKSHOP_IMAGES = '/workshop/upload/images',
+    ADD_WORKSHOP_REPORT = '/workshop/upload/report',
+    ADD_WORKSHOP_STMT_EXPENDITURE = '/workshop/upload/stmt-expenditure',
+    DELETE_WORKSHOP_MEDIA_IMAGE = '/workshop/delete/media-image',
+    DELETE_WORKSHOP_IMAGE = '/workshop/delete/image',
+    DELETE_WORKSHOP_REPORT = '/workshop/delete/report',
+    DELETE_WORKSHOP_STMT_EXPENDITURE = '/workshop/delete/stmt-expenditure'
+
 };
 
 export enum SPECIALIZATION_API_URLS {
