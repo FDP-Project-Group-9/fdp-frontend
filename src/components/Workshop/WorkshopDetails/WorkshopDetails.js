@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Row, Col, Typography, Card, Carousel, Divider, Space, Button, Popconfirm, Result, Descriptions, Empty, Skeleton, Image, Table } from 'antd';
+import { Row, Col, Typography, Card, Carousel, Divider, Space, Button, Popconfirm, Result, Descriptions, Empty, Skeleton, Image, Table, Upload } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { 
     fetchWorkshopDetails,
+    selectSingleWorkshopData,
     selectWorkshopApiCallStatus, 
     selectWorkshopCoCoordinatorDetails,
     selectWorkshopCoordinatorDetails, 
@@ -15,7 +16,7 @@ import {
     selectWorkshopSpeakersDetails
 } from '../../../redux/slices/workshop-slice';
 
-import { apiStatusFailed, formatDate, getJWTData, isLoading } from '../../../utils/helper';
+import { apiStatusFailed, formatDate, getJWTData, getUserId, isLoading } from '../../../utils/helper';
 import EmptyCard from '../../Extras/Empty';
 import { ReadOutlined } from '@ant-design/icons';
 import { ROLE_NAMES, ROUTES } from '../../../utils/constants';
@@ -23,10 +24,12 @@ import styles from './WorkshopDetails.module.css';
 import NoDataText from '../../Extras/NoDataText';
 import { getTimelineStatusTag, getWorkshopStatusTag } from '../../Extras/helpers';
 import { approveWorkshop, getWorkshopImage, getWorkshopMediaImage } from '../../../utils/apiCallHandlers';
+import WorkshopDocuments from '../CoordinatorWorkshopDetails/WorkshopDocuments';
 
 const { Title } = Typography;
 
-const WorkshopDetails = () => {
+const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
+    const singleWorkshopData = useSelector(selectSingleWorkshopData);
     const apiCallStatus = useSelector(selectWorkshopApiCallStatus);
     const workshopCoordinatorDetails = useSelector(selectWorkshopCoordinatorDetails);
     const workshopInsitituteDetails = useSelector(selectWorkshopInstituteDetails);
@@ -101,7 +104,7 @@ const WorkshopDetails = () => {
     
     useEffect(() => {
         fileLoaderFunction();
-    }, [workshopDetails]);
+    }, [singleWorkshopData]);
     
     const approveRejectWorkshopHandler = async (approvalValue) => {
         try {
@@ -117,72 +120,86 @@ const WorkshopDetails = () => {
         let actions = null;
         
         // checking which actions to show based on the role of user
-        if(isAdmin) {
-            const approveWorkshopBtn = (
-                <Popconfirm
-                    title = {"Approve Workshop Proposal!"}
-                    okText = {"Yes"}
-                    cancelText = {"No"}
-                    onConfirm={() => approveRejectWorkshopHandler(true)}
-                    description = {<span>Are you sure you want to <b>Approve</b> this workshop proposal?</span>}
-                >
+        if(coordinatorWorkshop) {
+            if(workshopDraftStatus) {
+                actions = (
                     <Button
                         type = {"primary"}
+                        onClick = {() => navigate(ROUTES.CREATE_WORKSHOP + "/" + workshopId)}
                     >
-                        Approve Workshop Proposal
+                        Complete Application
                     </Button>
-                </Popconfirm>
-            );
-            if(!isWorkshopDetailsEmpty && workshopDetails.workshop_approval_status === null) {
-                actions = (
-                    <Space direction = {"horizontal"}>
-                        <Popconfirm
-                            title = {"Reject Workshop Proposal!"}
-                            okText = {"Yes"}
-                            okButtonProps = {{danger: true}}
-                            cancelText = {"No"}
-                            onConfirm={() => approveRejectWorkshopHandler(false)}
-                            description = {<span>Are you sure you want to <b>Reject</b> this workshop proposal?</span>}
-                        >
-                            <Button
-                                type = {"primary"}
-                                className = {styles['reject-btn-style']}
-                                danger
-                            >
-                                Reject Workshop Proposal
-                            </Button>
-                        </Popconfirm>
-                        {approveWorkshopBtn}
-                    </Space>
                 );
-            }
-            else if(!isWorkshopDetailsEmpty && !workshopDetails.workshop_approval_status){
-                actions = approveWorkshopBtn;
             }
         }
         else {
-            actions = (
-                <Popconfirm
-                    title = {"Apply to Workshop!"}
-                    okText = {"Yes"}
-                    cancelText = {"No"}
-                    // onConfirm={() => approveRejectCoordinatorHandler(true)}
-                    description = {<span>Are you sure you want to <b>Apply</b> to this workshop?</span>}
-                >
-                    <Button
-                        type = {"primary"}
+            if(isAdmin) {
+                const approveWorkshopBtn = (
+                    <Popconfirm
+                        title = {"Approve Workshop Proposal!"}
+                        okText = {"Yes"}
+                        cancelText = {"No"}
+                        onConfirm={() => approveRejectWorkshopHandler(true)}
+                        description = {<span>Are you sure you want to <b>Approve</b> this workshop proposal?</span>}
                     >
-                        Apply to Workshop
-                    </Button>
-                </Popconfirm>
-            );
+                        <Button
+                            type = {"primary"}
+                        >
+                            Approve Workshop Proposal
+                        </Button>
+                    </Popconfirm>
+                );
+                if(!isWorkshopDetailsEmpty && workshopDetails.workshop_approval_status === null) {
+                    actions = (
+                        <Space direction = {"horizontal"}>
+                            <Popconfirm
+                                title = {"Reject Workshop Proposal!"}
+                                okText = {"Yes"}
+                                okButtonProps = {{danger: true}}
+                                cancelText = {"No"}
+                                onConfirm={() => approveRejectWorkshopHandler(false)}
+                                description = {<span>Are you sure you want to <b>Reject</b> this workshop proposal?</span>}
+                            >
+                                <Button
+                                    type = {"primary"}
+                                    className = {styles['reject-btn-style']}
+                                    danger
+                                >
+                                    Reject Workshop Proposal
+                                </Button>
+                            </Popconfirm>
+                            {approveWorkshopBtn}
+                        </Space>
+                    );
+                }
+                else if(!isWorkshopDetailsEmpty && !workshopDetails.workshop_approval_status){
+                    actions = approveWorkshopBtn;
+                }
+            }
+            else {
+                actions = (
+                    <Popconfirm
+                        title = {"Apply to Workshop!"}
+                        okText = {"Yes"}
+                        cancelText = {"No"}
+                        // onConfirm={() => approveRejectCoordinatorHandler(true)}
+                        description = {<span>Are you sure you want to <b>Apply</b> to this workshop?</span>}
+                    >
+                        <Button
+                            type = {"primary"}
+                        >
+                            Apply to Workshop
+                        </Button>
+                    </Popconfirm>
+                );
+            }
         }
 
         return (
             <Row justify = {"space-between"} align = {"middle"}>
                 <Col>
                     <Title level = {4} className='no-margin'>
-                        {workshopDetails.title}
+                        {workshopDetails.title ?? "Untitled"}
                     </Title>
                 </Col>
                 <Col>
@@ -296,7 +313,7 @@ const WorkshopDetails = () => {
             <Table
                 dataSource={getTableDataHandler(workshopSpeakersDetails)} 
                 columns={columns} 
-                scroll={{y: 220}} 
+                scroll={workshopSpeakersDetails.length > 3 ? {y: 220}: {}} 
                 pagination = {false}
                 bordered
             />
@@ -349,7 +366,7 @@ const WorkshopDetails = () => {
             );
         }
 
-        if(!isLoading(apiCallStatus) && workshopDraftStatus) {
+        if(!isLoading(apiCallStatus) && !coordinatorWorkshop && workshopDraftStatus) {
             content = (
                 <Col span = {24}>
                     <Result 
@@ -368,7 +385,7 @@ const WorkshopDetails = () => {
                 </Col>
             );
         }
-        else if(!isLoading(apiCallStatus) && !isAdmin && !workshopDetails.workshop_approval_status) {
+        else if(!isLoading(apiCallStatus) && !coordinatorWorkshop && !isAdmin && !workshopDetails.workshop_approval_status) {
             content = (
                 <Col span = {24}>
                     <Result 
@@ -387,17 +404,53 @@ const WorkshopDetails = () => {
                 </Col>
             );
         }
+        else if(!isLoading(apiCallStatus) && coordinatorWorkshop && Number(workshopCoordinatorDetails.user_id) != Number(getUserId())) {
+            content = (
+                <Col span = {24}>
+                    <Result 
+                        status = {403}
+                        title = "Cannot view workshop!"
+                        subTitle = {<span>Cannot view the details of other coordinator's workshop!</span>}
+                        extra = {
+                        <Button
+                            type = {"primary"}
+                            onClick = {() => navigate(ROUTES.MY_WORKSHOP)}
+                        >
+                            View Your Workshops
+                        </Button>
+                        }
+                    />
+                </Col>
+            );
+        }
         else {
             content = (
                 <>
                     <Col span = {15}>
-                        <Card className='card-container' loading = {isLoading(apiCallStatus)}>
-                            {/* Header for the details card */}
-                            {getHeaderDetails()}
-                            <Divider />
-                            {/* Workshop details body content */}
-                            {getWorkshopBodyDetails()}
-                        </Card>
+                        <Row gutter = {[0, 24]}>
+                            <Col span = {24}>
+                                <Card className='card-container' loading = {isLoading(apiCallStatus)}>
+                                    {/* Header for the details card */}
+                                    {getHeaderDetails()}
+                                    <Divider />
+                                    {/* Workshop details body content */}
+                                    {getWorkshopBodyDetails()}
+                                </Card>
+                            </Col>
+                            {/* Workshop Speakers details */}
+                            <Col span = {24}>
+                                <Card loading = {isLoading(apiCallStatus)} title = {"Workshop Speakers"}>
+                                    <WorkshopSpeakers />
+                                </Card>
+                            </Col>
+                            {
+                                coordinatorWorkshop || isAdmin
+                                 ?
+                                    <WorkshopDocuments isAdmin = {isAdmin} />
+                                :
+                                    null
+                            }
+                        </Row>
                     </Col>
                     <Col span = {9} >
                         <Card className = {[styles['images-container'], 'card-container'].join(' ')} loading = {isLoading(apiCallStatus)}>
@@ -428,11 +481,6 @@ const WorkshopDetails = () => {
                             }
                         </Card>
                     </Col>
-                    <Col span = {15}>
-                        <Card loading = {isLoading(apiCallStatus)} title = {"Workshop Speakers"}>
-                            <WorkshopSpeakers />
-                        </Card>
-                    </Col>
                 </>
             );
         }
@@ -442,14 +490,21 @@ const WorkshopDetails = () => {
 
     return (
         <Row gutter = {[24, 24]} style = {{position: 'relative'}}>
-            <Col span = {24}>
-                <Card className='card-container'>
-                    <Title className = 'no-margin' level = {2}>
-                        <ReadOutlined />&nbsp;
-                        Workshop Details
-                    </Title>
-                </Card>
-            </Col>
+            {
+                !coordinatorWorkshop
+                ?
+                    <Col span = {24}>
+                        <Card className='card-container'>
+                            <Title className = 'no-margin' level = {2}>
+                                <ReadOutlined />&nbsp;
+                                Workshop Details
+                            </Title>
+                        </Card>
+                    </Col>
+
+                :
+                    null
+            }
             {
                 apiStatusFailed(apiCallStatus)
                 ?

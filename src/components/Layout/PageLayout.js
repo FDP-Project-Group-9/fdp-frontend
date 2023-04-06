@@ -69,8 +69,8 @@ const PageLayout = () => {
     const menuItems = SideMenuOptions();
 
     const selectedMenuKeyHandler = () => {
-        if(location.pathname.includes(ROUTES.My_WORKSHOP))
-            return ROUTES.My_WORKSHOP;
+        if(location.pathname.includes(ROUTES.MY_WORKSHOP))
+            return ROUTES.MY_WORKSHOP;
         else if(location.pathname.includes(ROUTES.CREATE_WORKSHOP))
             return ROUTES.CREATE_WORKSHOP;
         else if(location.pathname.includes(ROUTES.COORDINATORS))

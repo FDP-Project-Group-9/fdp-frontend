@@ -163,7 +163,7 @@ const OtpVerficationContainer = ({ workshopId }) => {
         try {
             await createWorkshop(workshopId);
             setLoading(false);
-            navigate(ROUTES.My_WORKSHOP);
+            navigate(ROUTES.MY_WORKSHOP);
         }
         catch(error) {
             setLoading(false);

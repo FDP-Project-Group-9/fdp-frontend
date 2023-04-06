@@ -466,7 +466,7 @@ const WorkshopSpeakers = () => {
                 <Table 
                     dataSource={getTableDataHandler(workshopSpeakersDetails)} 
                     columns={columns} 
-                    scroll={{y: 220}} 
+                    scroll={workshopSpeakersDetails.length > 3 ? {y: 220}: {}} 
                     pagination = {false}
                     bordered
                 />

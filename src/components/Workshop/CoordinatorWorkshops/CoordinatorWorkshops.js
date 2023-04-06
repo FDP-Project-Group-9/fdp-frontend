@@ -100,7 +100,7 @@ const CoordinatorWorkshops = (props) => {
                                         <List.Item key={item.workshop_id} className = {["card-container", styles['item-card']].join(' ')}>
                                             <Row style = {{width: '100%'}}>
                                                 <Col span = {24}>
-                                                    <Link to = {ROUTES.My_WORKSHOP + `/${item?.workshop_id || ""}`}>
+                                                    <Link to = {ROUTES.MY_WORKSHOP + `/${item?.workshop_id || ""}`}>
                                                         <Card title = {item.title || "Untitled"} hoverable>
                                                             <Descriptions column={2}>
                                                                 <Descriptions.Item label = {"Workshop No."}>{item?.workshop_id || <NoDataText />}</Descriptions.Item>
