@@ -15,10 +15,12 @@ import {
     addWorkshopMediaImages, 
     addWorkshopReport, 
     addWorkshopStmtExpenditure, 
+    deleteWorkshopBrochure, 
     deleteWorkshopImage, 
     deleteWorkshopMediaImage, 
     deleteWorkshopReport, 
     deleteWorkshopStmtExpendtiure, 
+    getWorkshopBrochure, 
     getWorkshopImage, 
     getWorkshopMediaImage,
     getWorkshopReport, 
@@ -32,7 +34,8 @@ const FILE_TYPE = {
     mediaImages: 'mediaImages',
     workshopImages: 'workshopImages',
     report: 'report',
-    stmtExpn: 'stmtExpn'
+    stmtExpn: 'stmtExpn',
+    brochure: 'brochure'
 };
 
 const WorkshopDocuments = ({
@@ -50,7 +53,8 @@ const WorkshopDocuments = ({
     let workshopMediaImagesList = [], 
         workshopImagesList = [], 
         workshopReportList = [], 
-        workshopStmtOfExpenditureList = [];
+        workshopStmtOfExpenditureList = [],
+        workshopBrochureId = null;
     
     const noDocumentUploaded = (
         <Empty
@@ -86,6 +90,10 @@ const WorkshopDocuments = ({
         workshopStmtOfExpenditureList = [{
             uid: workshopFileDetails.other_docs.id,
         }];
+    }
+
+    if(workshopFileDetails.other_docs?.brochure_exists) {
+        workshopBrochureId = workshopFileDetails.other_docs.id;
     }
 
     const onFileChangeHandler = async (file, fileType) => {
@@ -141,6 +149,10 @@ const WorkshopDocuments = ({
                     doc = await getWorkshopStmtExpenditure(file.uid);
                     url = window.URL.createObjectURL(new Blob([doc.data], {type: doc.data.type}));
                     break;
+                case FILE_TYPE.brochure:
+                    doc = await getWorkshopBrochure(file);
+                    url = window.URL.createObjectURL(new Blob([doc.data], {type: doc.data.type}));
+                    break;
             }
             const link = document.createElement('a');
             link.href = url;
@@ -168,6 +180,9 @@ const WorkshopDocuments = ({
                 case FILE_TYPE.stmtExpn:
                     await deleteWorkshopStmtExpendtiure(workshopId, file.uid);
                     break;
+                case FILE_TYPE.brochure:
+                    await deleteWorkshopBrochure(workshopId, file);
+                    break;
             }
             setLoading(false);
             await dispatch(fetchWorkshopDetails(workshopId));
@@ -184,6 +199,7 @@ const WorkshopDocuments = ({
             key = {index} 
             onDeleteHandler = {() => onFileRemoveHandler(file, FILE_TYPE.mediaImages)}
             onPreviewHandler = {() => onPreviewHandler(file, FILE_TYPE.mediaImages)}
+            disableDeleteBtn = {isAdmin}
         />
     )); 
 
@@ -194,6 +210,7 @@ const WorkshopDocuments = ({
             key = {index} 
             onDeleteHandler = {() => onFileRemoveHandler(file, FILE_TYPE.workshopImages)}
             onPreviewHandler = {() => onPreviewHandler(file, FILE_TYPE.workshopImages)}
+            disableDeleteBtn = {isAdmin}
         />
     )); 
 
@@ -204,6 +221,7 @@ const WorkshopDocuments = ({
             key = {index} 
             onDeleteHandler = {() => onFileRemoveHandler(file, FILE_TYPE.report)}
             onPreviewHandler = {() => onPreviewHandler(file, FILE_TYPE.report)}
+            disableDeleteBtn = {isAdmin}
         />
     )); 
 
@@ -214,6 +232,7 @@ const WorkshopDocuments = ({
             key = {index} 
             onDeleteHandler = {() => onFileRemoveHandler(file, FILE_TYPE.stmtExpn)}
             onPreviewHandler = {() => onPreviewHandler(file, FILE_TYPE.stmtExpn)}
+            disableDeleteBtn = {isAdmin}
         />
     )); 
 
@@ -295,6 +314,21 @@ const WorkshopDocuments = ({
                         </>
                 }
                 
+                <Divider orientation="left" orientationMargin={0}>Workshop Brochure</Divider>
+                <Card>
+                    {
+                        workshopBrochureId && 
+                        <FileCard
+                            fileIcon = {<FileTextOutlined />}
+                            fileName = {"Brochure"}
+                            onDeleteHandler = {() => onFileRemoveHandler(workshopBrochureId, FILE_TYPE.brochure)}
+                            onPreviewHandler = {() => onPreviewHandler(workshopBrochureId, FILE_TYPE.brochure)}
+                            disableDeleteBtn = {isAdmin}
+                        />
+                    }
+                    {!workshopBrochureId && noDocumentUploaded}
+                </Card>
+
                 <Divider orientation="left" orientationMargin={0}>Workshop Report</Divider>
                 <Card>
                     <Space direction = {"vertical"} style = {{width: '100%'}} >

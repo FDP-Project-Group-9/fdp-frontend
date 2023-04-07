@@ -37,8 +37,10 @@ export enum WORKSHOP_API_URLS {
     DELETE_WORKSHOP_MEDIA_IMAGE = '/workshop/delete/media-image',
     DELETE_WORKSHOP_IMAGE = '/workshop/delete/image',
     DELETE_WORKSHOP_REPORT = '/workshop/delete/report',
-    DELETE_WORKSHOP_STMT_EXPENDITURE = '/workshop/delete/stmt-expenditure'
-
+    DELETE_WORKSHOP_STMT_EXPENDITURE = '/workshop/delete/stmt-expenditure',
+    CREATE_WORKSHOP_BROCHURE = '/workshop/create-workshop/brochure',
+    GET_WORKSHOP_BROCHURE = '/workshop/view/brochure',
+    DELETE_WORKSHOP_BROCHURE = '/workshop/delete/brochure'
 };
 
 export enum SPECIALIZATION_API_URLS {

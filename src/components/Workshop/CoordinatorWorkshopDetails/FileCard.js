@@ -9,6 +9,7 @@ const FileCard = ({
     fileName,
     onPreviewHandler,
     onDeleteHandler,
+    disableDeleteBtn,
     loading = false
 }) => {
     const [mouseOver, setMouseOver] = useState(false);
@@ -27,7 +28,13 @@ const FileCard = ({
                         ?
                             <Space size = {16}>
                                 <Button type = {"link"} icon = {<EyeOutlined size = {10}/>} onClick = {onPreviewHandler}/>
-                                <Button type = {"link"} danger icon = {<DeleteOutlined size = {10}/>} onClick = {onDeleteHandler} />
+                                {
+                                    disableDeleteBtn
+                                    ?
+                                        null
+                                    :
+                                        <Button type = {"link"} danger icon = {<DeleteOutlined size = {10}/>} onClick = {onDeleteHandler} />
+                                }
                             </Space>
                         :
                             null

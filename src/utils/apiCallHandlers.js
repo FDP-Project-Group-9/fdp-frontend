@@ -300,3 +300,35 @@ export const getInstituteLogo = async () => {
         throw error;
     }
 };
+
+export const createWorkshopBrochure = async (workshopId) => {
+    try {
+        return await requestHandler.post(WORKSHOP_API_URLS.CREATE_WORKSHOP_BROCHURE, {
+            workshop_id: workshopId
+        });
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getWorkshopBrochure = async (fileId) => {
+    try {
+        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_BROCHURE + "/" + fileId);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const deleteWorkshopBrochure = async (workshopId, fileId) => {
+    try {
+        return await requestHandler.delete(WORKSHOP_API_URLS.DELETE_WORKSHOP_BROCHURE, {
+            workshop_id: workshopId, 
+            file_id: fileId
+        });
+    }
+    catch(error) {
+        throw error;
+    }
+};

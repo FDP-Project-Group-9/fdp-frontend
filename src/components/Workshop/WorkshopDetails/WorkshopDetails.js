@@ -23,7 +23,7 @@ import { ROLE_NAMES, ROUTES } from '../../../utils/constants';
 import styles from './WorkshopDetails.module.css';
 import NoDataText from '../../Extras/NoDataText';
 import { getTimelineStatusTag, getWorkshopStatusTag } from '../../Extras/helpers';
-import { approveWorkshop, getWorkshopImage, getWorkshopMediaImage } from '../../../utils/apiCallHandlers';
+import { approveWorkshop, createWorkshopBrochure, getWorkshopImage, getWorkshopMediaImage } from '../../../utils/apiCallHandlers';
 import WorkshopDocuments from '../CoordinatorWorkshopDetails/WorkshopDocuments';
 
 const { Title } = Typography;
@@ -48,6 +48,7 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
     const [loadingWorkshopImages, setLoadingWorkshopImages] = useState(false);
     const [errorWorkshopMediaImages, setErrorWorkshopMediaImages] = useState(false);
     const [errorWorkshopImages, setErrorWorkshopImages] = useState(false);
+    const [loading, setLoading] = useState(false);
     
     const isAdmin = getJWTData().role_name === ROLE_NAMES.ADMINISTRATOR;
     const isWorkshopDetailsEmpty = Object.keys(workshopDetails).length === 0;
@@ -119,8 +120,21 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
     const getHeaderDetails = () => { 
         let actions = null;
         
+        const generateWorkshopBrochure = async () => {
+            setLoading(true);
+            try {
+                await createWorkshopBrochure(workshopId);
+                setLoading(false);
+                await dispatch(fetchWorkshopDetails(workshopId));
+            }
+            catch(error) {
+                setLoading(false);
+            } 
+        }
+
         // checking which actions to show based on the role of user
         if(coordinatorWorkshop) {
+            console.log(workshopFileDetails)
             if(workshopDraftStatus) {
                 actions = (
                     <Button
@@ -129,6 +143,16 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
                     >
                         Complete Application
                     </Button>
+                );
+            }
+            else if(workshopDetails.workshop_approval_status && workshopFileDetails.other_docs && !workshopFileDetails.other_docs.brochure_exists) {
+                actions = (
+                    <Button
+                        type = {"primary"}
+                        onClick = {generateWorkshopBrochure}
+                    >
+                        Generate Workshop Brochure
+                </Button>
                 );
             }
         }
