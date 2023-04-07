@@ -248,3 +248,55 @@ export const deleteWorkshopStmtExpendtiure = async (workshopId, fileId) => {
         throw error;
     }
 };
+
+export const uploadCoordinatorMandateDocs = async (formData) => {
+    try {
+        return await requestHandler.put(UMS_API_URLS.UPLOAD_MANDATE_DOCS, formData);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const deleteCoordinatorMandateDocs = async (data) => {
+    try {
+        return await requestHandler.delete(UMS_API_URLS.UPLOAD_MANDATE_DOCS, data);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getCoordinatorMandateForm = async () => {
+    try {
+        return await requestHandler.getDocument(UMS_API_URLS.GET_COORDINATOR_MANDATE_FORM);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+export const getCoordinatorPhoto = async () => {
+    try {
+        return await requestHandler.getDocument(UMS_API_URLS.GET_COORDINATOR_PHOTO);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+export const getCoordinatorSignature = async () => {
+    try {
+        return await requestHandler.getDocument(UMS_API_URLS.GET_COORDINATOR_SIGNATURE);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getInstituteLogo = async () => {
+    try {
+        return await requestHandler.getDocument(UMS_API_URLS.GET_INSTITUTE_LOGO);
+    }
+    catch(error) {
+        throw error;
+    }
+};

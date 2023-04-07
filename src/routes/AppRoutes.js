@@ -19,6 +19,7 @@ import CoordinatorProfile from '../components/UserManagement/ListCoordinators/Co
 import AllWorkshops from '../components/Workshop/AllWorkshops/AllWorkshops';
 import WorkshopDetails from '../components/Workshop/WorkshopDetails/WorkshopDetails';
 import DetailsContainer from '../components/Workshop/CoordinatorWorkshopDetails/DetailsContainer';
+import CoordinatorMandateDocuments from '../components/UserManagement/CoordinatorMandateDocuments';
 
 const AppRoutes = (props) => {
     return (
@@ -60,7 +61,7 @@ const AppRoutes = (props) => {
                             <Route path = {ROUTES.FEEDBACK} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.CERTIFICATE} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.ATTENDANCE} element = {<h1>fewffef</h1>} />
-                            <Route path = {ROUTES.MANDATE_DOCS} element = {<h1>fewffef</h1>} />
+                            <Route path = {ROUTES.MANDATE_DOCS} element = {<CoordinatorMandateDocuments />} />
                             <Route path = {ROUTES.FINANCES} element = {<h1>fewffef</h1>} />
                         {/* </Route> */}
                     </Route>

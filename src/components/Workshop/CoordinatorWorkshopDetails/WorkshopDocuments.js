@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FileImageOutlined, FileTextOutlined, UploadOutlined,} from "@ant-design/icons";
-import { Button, Card, Col, Divider, Empty, Space, Typography, Upload } from "antd";
+import { Button, Card, Col, Divider, Empty, Row, Space, Typography, Upload } from "antd";
 import { useParams } from "react-router-dom";
 
 import { 
@@ -26,7 +26,7 @@ import {
 } from "../../../utils/apiCallHandlers";
 import FileCard from "./FileCard";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const FILE_TYPE = {
     mediaImages: 'mediaImages',
@@ -244,6 +244,15 @@ const WorkshopDocuments = ({
                                         }
                                     </Upload>
                                     { workshopMediaFileCards }
+                                    {
+                                        isAdmin
+                                        ?   
+                                            null
+                                        :
+                                            <Row align = {'end'}>
+                                                <Text type = "secondary" className = "font-size-10"> (Max. 5 files allowed)</Text>
+                                            </Row>
+                                    }
                                 </Space>
                             </Card>
                         </>
@@ -272,6 +281,15 @@ const WorkshopDocuments = ({
                                         }
                                     </Upload>
                                     { workshopImagesFileCards }
+                                    {
+                                        isAdmin
+                                        ?
+                                            null
+                                        :
+                                            <Row align = {'end'}>
+                                                <Text type = "secondary" className = "font-size-10"> (Max. 5 files allowed)</Text>
+                                            </Row>
+                                    }
                                 </Space>
                             </Card>
                         </>
@@ -294,6 +312,15 @@ const WorkshopDocuments = ({
                             }
                         </Upload>
                         {workshopReportFileCards}
+                        {
+                            isAdmin
+                            ?
+                                null
+                            :
+                                <Row align = {'end'}>
+                                    <Text type = "secondary" className = "font-size-10"> (Only 1 report file can be uploaded)</Text>
+                                </Row>
+                        }
                     </Space>
                     {workshopReportList.length === 0 && isAdmin && noDocumentUploaded}
                 </Card>
@@ -315,6 +342,15 @@ const WorkshopDocuments = ({
                             }
                         </Upload>
                         { workshopStmtExpenFileCards }
+                        {
+                            isAdmin 
+                            ?
+                                null
+                            :
+                                <Row align = {'end'}>
+                                    <Text type = "secondary" className = "font-size-10"> (Only 1 statement file can be uploaded)</Text>
+                                </Row> 
+                        }
                     </Space>
                     {workshopStmtOfExpenditureList.length === 0 && isAdmin && noDocumentUploaded}
                 </Card>

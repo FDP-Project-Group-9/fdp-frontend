@@ -1,4 +1,4 @@
-import { Card, Col, Row, Tabs, Typography } from "antd";
+import { Affix, Card, Col, Row, Tabs, Typography } from "antd";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -37,6 +37,7 @@ const DetailsContainer = () => {
     const location = useLocation();
 
     const [activeTabKey, setActiveTabKey] = useState(null);
+    const [affixed, setAffixed] = useState(false);
 
     useEffect(() => {
         setActiveTabKey(location.pathname.split('/').slice(0, -1).join('/'));
@@ -47,14 +48,22 @@ const DetailsContainer = () => {
     };
 
     return (
-        <Row>
+        <Row gutter = {[0, 24]}>
             <Col span = {24}>
-                <Tabs
-                    tabBarGutter={32}
-                    activeKey = {activeTabKey}
-                    items = { tabItems }
-                    onChange = { onTabChangeHandler }
-                />
+                <Affix offsetTop={24} onChange={() => setAffixed(value => !value)}>
+                    <Tabs
+                        tabBarGutter={32}
+                        activeKey = {activeTabKey}
+                        items = { tabItems }
+                        onChange = { onTabChangeHandler }
+                        style={{
+                            borderRadius: '8px',
+                            backgroundColor: 'white',
+                            padding: '0px 16px',
+                            boxShadow: affixed ? 'rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px' : ''
+                        }}
+                    />
+                </Affix>
             </Col>
             <Col span = {24}>
                 <Outlet />

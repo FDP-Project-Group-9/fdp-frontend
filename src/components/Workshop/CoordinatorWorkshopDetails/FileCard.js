@@ -8,11 +8,12 @@ const FileCard = ({
     fileIcon,
     fileName,
     onPreviewHandler,
-    onDeleteHandler
+    onDeleteHandler,
+    loading = false
 }) => {
     const [mouseOver, setMouseOver] = useState(false);
     return (
-        <Card onMouseOver = {() => setMouseOver(true)} onMouseOut={() => setMouseOver(false)} style = {{width: '100%'}} hoverable>
+        <Card onMouseOver = {() => setMouseOver(true)} onMouseOut={() => setMouseOver(false)} style = {{width: '100%'}} hoverable loading = {loading}>
             <Row justify = {"space-between"} align={'middle'}>
                 <Col>
                     <Space size = {10}>

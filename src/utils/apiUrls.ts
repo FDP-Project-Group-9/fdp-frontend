@@ -6,7 +6,12 @@ export enum UMS_API_URLS {
     UPDATE_PROFILE = '/ums/update-profile',
     COORDINATORS = '/ums/coordinators',
     GET_REGISTRATION_DOCUMENT = '/ums/view/registration-doc',
-    APPROVE_COORDINATOR = '/ums/approve-registration'
+    APPROVE_COORDINATOR = '/ums/approve-registration',
+    UPLOAD_MANDATE_DOCS = '/ums/upload/mandate-docs',
+    GET_COORDINATOR_MANDATE_FORM = '/ums/view/mandate-form',
+    GET_COORDINATOR_PHOTO = '/ums/view/coordinator-photo',
+    GET_COORDINATOR_SIGNATURE = '/ums/view/coordinator-signature',
+    GET_INSTITUTE_LOGO = '/ums/view/institute-logo'
 };
 
 export enum WORKSHOP_API_URLS {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Row, Col, Typography, Card, Carousel, Divider, Space, Button, Popconfirm, Result, Descriptions, Empty, Skeleton, Image, Table, Upload } from 'antd';
+import { Row, Col, Typography, Card, Carousel, Divider, Space, Button, Popconfirm, Result, Descriptions, Empty, Skeleton, Image, Table, Upload, Affix } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { 
@@ -453,33 +453,35 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
                         </Row>
                     </Col>
                     <Col span = {9} >
-                        <Card className = {[styles['images-container'], 'card-container'].join(' ')} loading = {isLoading(apiCallStatus)}>
-                            <Title level = {5} className='no-margin'>Media Images:-</Title>
-                            {
-                                loadingWorkshopMediaImages
-                                ?
-                                    <Skeleton active />
-                                :
-                                    errorWorkshopMediaImages
+                        <Affix offsetTop={coordinatorWorkshop ? 114: 24}>
+                            <Card className = {'card-container'} loading = {isLoading(apiCallStatus)}>
+                                <Title level = {5} className='no-margin'>Media Images:-</Title>
+                                {
+                                    loadingWorkshopMediaImages
                                     ?
-                                        <EmptyCard />
+                                        <Skeleton active />
                                     :
-                                    mediaImagesContent 
-                            }
-                            <Divider />
-                            <Title level = {5} className='no-margin'>Workshop Images:-</Title>
-                            {
-                                loadingWorkshopImages
-                                ?
-                                    <Skeleton active />
-                                :
-                                    errorWorkshopImages
+                                        errorWorkshopMediaImages
+                                        ?
+                                            <EmptyCard />
+                                        :
+                                        mediaImagesContent 
+                                }
+                                <Divider />
+                                <Title level = {5} className='no-margin'>Workshop Images:-</Title>
+                                {
+                                    loadingWorkshopImages
                                     ?
-                                        <EmptyCard />
+                                        <Skeleton active />
                                     :
-                                    workshopImagesContent
-                            }
-                        </Card>
+                                        errorWorkshopImages
+                                        ?
+                                            <EmptyCard />
+                                        :
+                                        workshopImagesContent
+                                }
+                            </Card>
+                        </Affix>
                     </Col>
                 </>
             );
