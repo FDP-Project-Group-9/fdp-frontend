@@ -314,7 +314,8 @@ export const createWorkshopBrochure = async (workshopId) => {
 
 export const getWorkshopBrochure = async (fileId) => {
     try {
-        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_BROCHURE + "/" + fileId);
+        const response = await requestHandler.get(WORKSHOP_API_URLS.GET_WORKSHOP_BROCHURE + "/" + fileId);
+        return response.data;
     }
     catch(error) {
         throw error;

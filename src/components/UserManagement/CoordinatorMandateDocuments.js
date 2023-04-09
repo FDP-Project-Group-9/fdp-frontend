@@ -163,7 +163,6 @@ const CoordinatorMandateDocuments = () => {
         }
     };
 
-    console.log(uploadDocumentObj);
     const onUploadHandler = async () => {
         setLoading(true);
         const formData = new FormData();

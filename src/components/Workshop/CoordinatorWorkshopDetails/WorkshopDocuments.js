@@ -151,7 +151,7 @@ const WorkshopDocuments = ({
                     break;
                 case FILE_TYPE.brochure:
                     doc = await getWorkshopBrochure(file);
-                    url = window.URL.createObjectURL(new Blob([doc.data], {type: doc.data.type}));
+                    url = doc.url;
                     break;
             }
             const link = document.createElement('a');
@@ -324,6 +324,7 @@ const WorkshopDocuments = ({
                             onDeleteHandler = {() => onFileRemoveHandler(workshopBrochureId, FILE_TYPE.brochure)}
                             onPreviewHandler = {() => onPreviewHandler(workshopBrochureId, FILE_TYPE.brochure)}
                             disableDeleteBtn = {isAdmin}
+                            loading = {loading}
                         />
                     }
                     {!workshopBrochureId && noDocumentUploaded}

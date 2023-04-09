@@ -134,7 +134,6 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
 
         // checking which actions to show based on the role of user
         if(coordinatorWorkshop) {
-            console.log(workshopFileDetails)
             if(workshopDraftStatus) {
                 actions = (
                     <Button
@@ -150,6 +149,7 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
                     <Button
                         type = {"primary"}
                         onClick = {generateWorkshopBrochure}
+                        loading = {loading}
                     >
                         Generate Workshop Brochure
                 </Button>
