@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Row, Col, Typography, Card, Carousel, Divider, Space, Button, Popconfirm, Result, Descriptions, Empty, Skeleton, Image, Table, Upload, Affix } from 'antd';
+import { Row, Col, Typography, Card, Carousel, Divider, Space, Button, Popconfirm, Result, Descriptions, Empty, Skeleton, Image, Table, Upload, Affix, Tooltip } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { 
@@ -23,7 +23,7 @@ import { ROLE_NAMES, ROUTES } from '../../../utils/constants';
 import styles from './WorkshopDetails.module.css';
 import NoDataText from '../../Extras/NoDataText';
 import { getTimelineStatusTag, getWorkshopStatusTag } from '../../Extras/helpers';
-import { approveWorkshop, createWorkshopBrochure, getWorkshopImage, getWorkshopMediaImage } from '../../../utils/apiCallHandlers';
+import { applyToWorkshop, approveWorkshop, createWorkshopBrochure, getWorkshopImage, getWorkshopMediaImage } from '../../../utils/apiCallHandlers';
 import WorkshopDocuments from '../CoordinatorWorkshopDetails/WorkshopDocuments';
 
 const { Title } = Typography;
@@ -115,6 +115,20 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
         catch(error) {}
     };
 
+    const applyToWorkshopHandler = async () => {
+        try {
+            const userId = getUserId();
+            await applyToWorkshop(workshopId, userId);
+            await dispatch(fetchWorkshopDetails(workshopId));
+        }
+        catch(error) {}
+    };
+
+    const checkHasAppliedButton = () => {
+        const hasApplied = singleWorkshopData.appliedParticipants.find(id => id === Number(getUserId()));
+        return !!hasApplied;
+    };
+
 
     // function to render the header content for the details card
     const getHeaderDetails = () => { 
@@ -200,20 +214,23 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
                     actions = approveWorkshopBtn;
                 }
             }
-            else {
+            else if(!checkHasAppliedButton()){
                 actions = (
                     <Popconfirm
                         title = {"Apply to Workshop!"}
                         okText = {"Yes"}
                         cancelText = {"No"}
-                        // onConfirm={() => approveRejectCoordinatorHandler(true)}
+                        onConfirm={applyToWorkshopHandler}
                         description = {<span>Are you sure you want to <b>Apply</b> to this workshop?</span>}
                     >
-                        <Button
-                            type = {"primary"}
-                        >
-                            Apply to Workshop
-                        </Button>
+                        <Tooltip title = {Number(getUserId()) === singleWorkshopData.coordinatorDetails?.user_id ? "Cannot apply to own workshop!": ""}>
+                            <Button
+                                disabled = {Number(getUserId()) === singleWorkshopData.coordinatorDetails?.user_id}
+                                type = {"primary"}
+                            >
+                                Apply to Workshop
+                            </Button>
+                        </Tooltip>
                     </Popconfirm>
                 );
             }

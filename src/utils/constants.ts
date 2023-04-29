@@ -45,6 +45,7 @@ export enum ROUTES {
     // BASE = "/coordinator",
     MY_WORKSHOP = "/workshop",
     ALL_WORKSHOPS = "/all-workshops",
+    APPLIED_WORKSHOPS = "/applied-workshops",
     CREATE_WORKSHOP = "/create-workshop",
     RESOURCE_PERSON = "/workshop/resource-person",
     PARTICIPANTS = "/workshop/participants",
@@ -55,7 +56,10 @@ export enum ROUTES {
     MY_PROFILE = "/my-profile",
     MANDATE_DOCS = "/mandate-docs",
     FINANCES = "/finances",
-    COORDINATORS = "/coordinators"
+    COORDINATORS = "/coordinators",
+    PARTICIPANT_QUIZ = "/applied-workshops/quiz",
+    PARTICIPANT_FEEDBACK = "/applied-workshops/feedback",
+    PARTICIPANT_DETAILS = "/workshop/participant"
 };
 
 export enum PARTICIPANT_ROUTES {
@@ -88,6 +92,12 @@ const COORDINATOR_WORKSHOP_NAV_OPTIONS = [
     {
         label: 'All Workshops',
         key: ROUTES.ALL_WORKSHOPS,
+        icon: null,
+        children: null
+    },
+    {
+        label: 'Applied Workshops',
+        key: ROUTES.APPLIED_WORKSHOPS,
         icon: null,
         children: null
     },
@@ -172,5 +182,22 @@ export const COORDINATOR_NAVMENU_OPTIONS = {
 };
 
 export const PARTICIPANT_NAVMENU_OPTIONS = {
-
+    ALL_WORKSHOPS: {
+        label: 'All Workshops',
+        key: ROUTES.ALL_WORKSHOPS,
+        icon: null,
+        children: null
+    },
+    APPLIED_WORKSHOPS: {
+        label: 'Applied Workshops',
+        key: ROUTES.APPLIED_WORKSHOPS,
+        icon: null,
+        children: null
+    },
+    PROFILE: {
+        label: 'Profile',
+        key: ROUTES.MY_PROFILE,
+        icon: null,
+        children: null
+    }
 };

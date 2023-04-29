@@ -40,7 +40,23 @@ export enum WORKSHOP_API_URLS {
     DELETE_WORKSHOP_STMT_EXPENDITURE = '/workshop/delete/stmt-expenditure',
     CREATE_WORKSHOP_BROCHURE = '/workshop/create-workshop/brochure',
     GET_WORKSHOP_BROCHURE = '/workshop/view/brochure',
-    DELETE_WORKSHOP_BROCHURE = '/workshop/delete/brochure'
+    DELETE_WORKSHOP_BROCHURE = '/workshop/delete/brochure',
+    APPLY_TO_WORKSHOP = '/participant/workshop/participant/apply',
+    GET_APPLIED_WORKSHOPS = '/participant/workshop/participants/getWorkshops',
+    GET_WORKSHOP_PARTICIPANTS = '/workshop/workshop-participants/workshop/getParticipants',
+    APPROVE_PARTICIPANT_PARTICIPATION = "/workshop/workshop-participants/workshop/approve-participant",
+    GET_PARTICIPANT_DETAILS = "/participant/workshop/participant/getParticipantDetailWorkshop",
+    UPDATE_ATTENDANCE = "/workshop/workshop-participants/workshop/update-attendance"
+};
+
+export enum QUIZ_API_URLS {
+    CREATE_QUIZ = "/workshop/quiz/create_quiz",
+    GET_QUIZ_DETAILS = "/workshop/quiz/get-quizDetails",
+    ADD_QUIZ_QUESTION = "/workshop/quiz/addQuestion",
+    GET_QUIZ_QUESTIONS = "/workshop/quiz/getQuestions",
+    DELETE_QUIZ_QUESTIONS = "/workshop/quiz/delete-question",
+    QUIZ_QUESTIONS_PARTICIPANTS = "/participant/workshop/participant/getParticipantQuiz",
+    EVALUATE_QUIZ = "/participant/workshop/participant/evaluateScore"
 };
 
 export enum SPECIALIZATION_API_URLS {

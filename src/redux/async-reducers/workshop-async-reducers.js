@@ -1,6 +1,6 @@
 import { requestHandler } from "../../utils/apiCall";
 import { WORKSHOP_API_URLS } from "../../utils/apiUrls";
-import { createQueryParamsUrl } from "../../utils/helper";
+import { createQueryParamsUrl, getUserId } from "../../utils/helper";
 import { selectPageNo, selectPerPage } from "../slices/workshop-slice";
 
 export const fetchCoordinatorWorkshopsThunk = async ( {filters}, { getState }) => {
@@ -21,7 +21,7 @@ export const fetchCoordinatorWorkshopsThunk = async ( {filters}, { getState }) =
     }
 };
 
-export const fetchAllWorkshopsThunk = async ({ filters, isAdmin = false}, { getState }) => {
+export const fetchAllWorkshopsThunk = async ({ filters, isAdmin = false, allWorkshops = true}, { getState }) => {
   try {
       const pageNo = selectPageNo(getState());
       const perPage = selectPerPage(getState());
@@ -32,8 +32,16 @@ export const fetchAllWorkshopsThunk = async ({ filters, isAdmin = false}, { getS
       Object.entries(filters).forEach(([key, value]) => {
         params.set(key, value);
       });
-      const allWorkshopsResponse = await requestHandler.get(createQueryParamsUrl(WORKSHOP_API_URLS.WORKSHOP_DETAILS, params));
-      return Promise.resolve(allWorkshopsResponse.data);
+
+      if(allWorkshops) {
+        const allWorkshopsResponse = await requestHandler.get(createQueryParamsUrl(WORKSHOP_API_URLS.WORKSHOP_DETAILS, params));
+        return Promise.resolve(allWorkshopsResponse.data);
+      }
+      else {
+        params.set('participantId', getUserId());
+        const appliedWorkshopsResponse = await requestHandler.get(createQueryParamsUrl(WORKSHOP_API_URLS.GET_APPLIED_WORKSHOPS, params));
+        return Promise.resolve(appliedWorkshopsResponse.data);
+      }
   }
   catch(error) {
     return Promise.reject(error);

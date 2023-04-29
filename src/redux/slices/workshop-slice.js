@@ -25,7 +25,8 @@ const initialState = {
          //key to store the draft state of workshop 
          draft: null,
          //key to store the otp verification status
-         otpVerified: null
+         otpVerified: null,
+         appliedParticipants: []
     },
     //object to store the filters
     filters: {},
@@ -102,6 +103,7 @@ const workshopSlice = createSlice({
             state.singleWorkshopData.files = action.payload.files_url;
             state.singleWorkshopData.draft = action.payload.draft;
             state.singleWorkshopData.otpVerified = action.payload.otp_verified;
+            state.singleWorkshopData.appliedParticipants = action.payload.applied_participants ?? [];
             state.status = API_STATUS_ENUM.SUCCESS;
         })
         .addCase(fetchWorkshopDetails.rejected, (state, action) => {

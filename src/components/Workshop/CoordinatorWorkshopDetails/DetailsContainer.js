@@ -3,11 +3,11 @@ import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { ROUTES } from "../../../utils/constants";
-import { FormOutlined, ReadOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { FormOutlined, QuestionCircleOutlined, ReadOutlined, SafetyCertificateOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
-const tabItems = [
+const coordinatorTabItems = [
     {
         label: <Title level = {5} className="no-margin">
                 <ReadOutlined />
@@ -29,6 +29,38 @@ const tabItems = [
             </Title>,
         key: ROUTES.QUIZ
     }
+];
+
+const participantTabItems = [
+    {
+        label: <Title level = {5} className="no-margin">
+                <ReadOutlined />
+                Workshop Details
+            </Title>,
+        key: ROUTES.APPLIED_WORKSHOPS
+    },
+    {
+        label: <Title level = {5} className="no-margin">
+                <QuestionCircleOutlined />
+                Quiz
+            </Title>,
+        key: ROUTES.PARTICIPANT_QUIZ
+    },
+    {
+        label: <Title level = {5} className="no-margin">
+                <FormOutlined />
+                Feedback
+            </Title>,
+        key: ROUTES.PARTICIPANT_FEEDBACK
+    },
+    // {
+    //     label: <Title level = {5} className="no-margin">
+    //             <SafetyCertificateOutlined />
+    //             Certificate
+    //         </Title>,
+    //     key: ROUTES.PARTICIPANT_FEEDBACK
+    // },
+
 ];
 
 const DetailsContainer = () => {
@@ -54,7 +86,7 @@ const DetailsContainer = () => {
                     <Tabs
                         tabBarGutter={32}
                         activeKey = {activeTabKey}
-                        items = { tabItems }
+                        items = { location.pathname.includes(ROUTES.APPLIED_WORKSHOPS) ? participantTabItems : coordinatorTabItems }
                         onChange = { onTabChangeHandler }
                         style={{
                             borderRadius: '8px',

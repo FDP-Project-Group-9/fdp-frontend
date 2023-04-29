@@ -1,5 +1,5 @@
 import { requestHandler } from "./apiCall";
-import { RESOURCE_PERSON_API_URLS, SPECIALIZATION_API_URLS, UMS_API_URLS, WORKSHOP_API_URLS } from "./apiUrls";
+import { QUIZ_API_URLS, RESOURCE_PERSON_API_URLS, SPECIALIZATION_API_URLS, UMS_API_URLS, WORKSHOP_API_URLS } from "./apiUrls";
 import { createQueryParamsUrl } from "./helper";
 
 export const fetchCoordinators = async (currentPageNo, perPageSize, profileStatus) => {
@@ -328,6 +328,144 @@ export const deleteWorkshopBrochure = async (workshopId, fileId) => {
             workshop_id: workshopId, 
             file_id: fileId
         });
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const applyToWorkshop = async (workshopId, participantId) => {
+    try {
+        return await requestHandler.post(WORKSHOP_API_URLS.APPLY_TO_WORKSHOP, {
+            workshopId: workshopId,
+            participantId: participantId,
+            approvalStatus: 2
+        });
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getWorkshopParticipants = async (workshopId, pageNo, pageSize, approvalStatus = "") => {
+    try {
+        const params = new Map();
+        params.set("page_no", pageNo);
+        params.set("per_page", pageSize);
+        params.set("workshopId", workshopId);
+        params.set("approvalStatus", approvalStatus);
+        const response = await requestHandler.get(createQueryParamsUrl(WORKSHOP_API_URLS.GET_WORKSHOP_PARTICIPANTS, params));
+        return response.data ?? {};
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const approveRejectParticipation = async (workshopId, participantId, approvalStatus) => {
+    try {
+        return await requestHandler.put(WORKSHOP_API_URLS.APPROVE_PARTICIPANT_PARTICIPATION, {
+            workshopId: workshopId,
+            participantId: participantId,
+            approvalStatus: approvalStatus
+        });
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getParticipantDetails = async (workshopId, participantId) => {
+    try {
+        const response = await requestHandler.get(WORKSHOP_API_URLS.GET_PARTICIPANT_DETAILS + `/${workshopId}/${participantId}`);
+        return response.data;
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const updateAttendance = async (data) => {
+    try {
+        return await requestHandler.put(WORKSHOP_API_URLS.UPDATE_ATTENDANCE, data);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const createQuizForWorkshop = async (data) => {
+    try {
+        return await requestHandler.put(QUIZ_API_URLS.CREATE_QUIZ, data);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getQuizDetails = async (workshopId) => {
+    try {
+        const params = new Map();
+        params.set("workshopId", workshopId);
+        const response = await requestHandler.get(createQueryParamsUrl(QUIZ_API_URLS.GET_QUIZ_DETAILS, params));
+        return response.data;
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const addQuizQuestion = async (data) => {
+    try {
+        return await requestHandler.put(QUIZ_API_URLS.ADD_QUIZ_QUESTION, data);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getQuizQuestionsForWorkshop = async (workshopId) => {
+    try {
+        const params = new Map();
+        params.set("workshopId", workshopId);
+        params.set("page_no", 1);
+        params.set("per_page", 100);
+        const response = await requestHandler.get(createQueryParamsUrl(QUIZ_API_URLS.GET_QUIZ_QUESTIONS, params));
+        return response.data;
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const getQuizQuestionsForParticipants = async (workshopId, participantId) => {
+    try {
+        const params = new Map();
+        params.set("workshopId", workshopId);
+        params.set("participantId", participantId);
+        params.set("page_no", 1);
+        params.set("per_page", 100);
+        const response = await requestHandler.get(createQueryParamsUrl(QUIZ_API_URLS.QUIZ_QUESTIONS_PARTICIPANTS, params));
+        return response.data;
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+export const deleteQuizQuestion = async (data) => {
+    try {
+        return await requestHandler.delete(QUIZ_API_URLS.DELETE_QUIZ_QUESTIONS, data);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
+
+export const evaluateQuiz = async (data) => {
+    try {
+        return await requestHandler.put(QUIZ_API_URLS.EVALUATE_QUIZ, data);
     }
     catch(error) {
         throw error;
