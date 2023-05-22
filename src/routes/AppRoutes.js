@@ -24,6 +24,7 @@ import WorkshopParticipants from '../components/Workshop/WorkshopPartcipants/Wor
 import ParticipantDetails from '../components/UserManagement/ParticipantDetails';
 import CoordinatorWorkshopQuiz from '../components/Workshop/CoordinatorWorkshopQuiz';
 import ParticipantQuiz from '../components/Workshop/ParticipantQuiz';
+import Finance from '../components/Workshop/Finance/Finance';
 
 const AppRoutes = (props) => {
     return (
@@ -79,7 +80,7 @@ const AppRoutes = (props) => {
                             <Route path = {ROUTES.CERTIFICATE} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.ATTENDANCE} element = {<h1>fewffef</h1>} />
                             <Route path = {ROUTES.MANDATE_DOCS} element = {<CoordinatorMandateDocuments />} />
-                            <Route path = {ROUTES.FINANCES} element = {<h1>fewffef</h1>} />
+                            <Route path = {ROUTES.FINANCES} element = {<Finance />} />
                         {/* </Route> */}
                     </Route>
                     {/* PARTICIPANT ROUTES */}

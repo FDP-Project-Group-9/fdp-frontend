@@ -15,7 +15,7 @@ const getParticipantsDataForTable = (participantsDetails) => {
         email: details.email_id ?? "N/A",
         mobileNo: details.mobile_no ?? "N/A",
         dob: formatDate(details.dob ?? "") ?? "N/A",
-        status: getParticipantApprovalStatusTag(details.participant_approval_status ?? 2),
+            status: getParticipantApprovalStatusTag(details.participant_approval_status ?? 2),
         participantApprovalStatus: details.participant_approval_status ?? 2,
     }));
 };

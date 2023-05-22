@@ -471,3 +471,34 @@ export const evaluateQuiz = async (data) => {
         throw error;
     }
 };
+
+export const getWorkshopFinanceReport = async (
+    coordinatorId = null,
+    month = null,
+    year = null, 
+    maxBudget = null,
+    areaSpecializationId = null
+) => {
+    try {
+        const params = new Map();
+        if(coordinatorId)
+            params.set('coordinator_id', coordinatorId);
+
+        if(month)
+            params.set('month', month);
+
+        if(year)
+            params.set('year', year);
+
+        if(areaSpecializationId)
+            params.set('area_specialization_id', areaSpecializationId);
+
+        if(maxBudget)
+            params.set('max_budget', maxBudget);
+
+        return await requestHandler.get(createQueryParamsUrl(WORKSHOP_API_URLS.FINANCE_REPORT, params));
+    }
+    catch(error) {
+        throw error;
+    }
+};

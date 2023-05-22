@@ -46,7 +46,8 @@ export enum WORKSHOP_API_URLS {
     GET_WORKSHOP_PARTICIPANTS = '/workshop/workshop-participants/workshop/getParticipants',
     APPROVE_PARTICIPANT_PARTICIPATION = "/workshop/workshop-participants/workshop/approve-participant",
     GET_PARTICIPANT_DETAILS = "/participant/workshop/participant/getParticipantDetailWorkshop",
-    UPDATE_ATTENDANCE = "/workshop/workshop-participants/workshop/update-attendance"
+    UPDATE_ATTENDANCE = "/workshop/workshop-participants/workshop/update-attendance",
+    FINANCE_REPORT = "/workshop/finance/report"
 };
 
 export enum QUIZ_API_URLS {
