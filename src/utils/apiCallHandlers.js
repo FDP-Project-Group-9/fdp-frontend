@@ -156,6 +156,15 @@ export const getWorkshopReport = async (fileId) => {
     }
 };
 
+export const getWorkshopCertificate = async () => {
+    try{
+        return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_CERTIFICATE);
+    }
+    catch(error) {
+        throw error;
+    }
+};
+
 export const getWorkshopStmtExpenditure = async (fileId) => {
     try {
         return await requestHandler.getDocument(WORKSHOP_API_URLS.GET_WORKSHOP_STMT_EXPENDITURE + "/" + fileId);

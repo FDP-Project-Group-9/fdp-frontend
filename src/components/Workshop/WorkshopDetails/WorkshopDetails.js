@@ -23,7 +23,7 @@ import { ROLE_NAMES, ROUTES } from '../../../utils/constants';
 import styles from './WorkshopDetails.module.css';
 import NoDataText from '../../Extras/NoDataText';
 import { getTimelineStatusTag, getWorkshopStatusTag } from '../../Extras/helpers';
-import { applyToWorkshop, approveWorkshop, createWorkshopBrochure, getWorkshopImage, getWorkshopMediaImage } from '../../../utils/apiCallHandlers';
+import { applyToWorkshop, approveWorkshop, createWorkshopBrochure, getParticipantDetails, getQuizDetails, getWorkshopCertificate, getWorkshopImage, getWorkshopMediaImage } from '../../../utils/apiCallHandlers';
 import WorkshopDocuments from '../CoordinatorWorkshopDetails/WorkshopDocuments';
 
 const { Title } = Typography;
@@ -49,6 +49,7 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
     const [errorWorkshopMediaImages, setErrorWorkshopMediaImages] = useState(false);
     const [errorWorkshopImages, setErrorWorkshopImages] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [ participantDetails, setParticipantDetails] = useState({});
     
     const isAdmin = getJWTData().role_name === ROLE_NAMES.ADMINISTRATOR;
     const isWorkshopDetailsEmpty = Object.keys(workshopDetails).length === 0;
@@ -101,6 +102,10 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
     
     useEffect(() => {
         dispatch(fetchWorkshopDetails(workshopId));
+        (async () => {
+        const participantDetailsR = await getParticipantDetails(workshopId, getUserId());
+        setParticipantDetails(participantDetailsR);
+        })();
     }, []);
     
     useEffect(() => {
@@ -233,6 +238,29 @@ const WorkshopDetails = ({ coordinatorWorkshop = false}) => {
                         </Tooltip>
                     </Popconfirm>
                 );
+            }
+            else if( (new Date(singleWorkshopData.workshopDetails.end_date)).getTime() < (new Date()).getTime() && participantDetails.quiz_score && participantDetails.quiz_score > 0) {
+                actions = (
+                    <Button
+                        type = "primary"
+                        onClick = {async () => {
+                            try {
+                                const doc = await getWorkshopCertificate();
+                                const url = window.URL.createObjectURL(new Blob([doc.data], {type: doc.data.type}));
+
+                                const link = document.createElement('a');
+                                link.href = url;
+                                link.setAttribute('target', '_blank');
+                                document.body.appendChild(link);
+                                link.click();
+                                link.remove();
+                            }
+                            catch(error) {}
+                        }}
+                    >
+                        View Certificate
+                    </Button>
+                )
             }
         }
 

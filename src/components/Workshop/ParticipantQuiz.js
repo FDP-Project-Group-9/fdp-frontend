@@ -160,7 +160,7 @@ const evaluateQuizHandler = async () => {
                         <>
                             <Card>
                                 <Title level={4} className="no-margin">
-                                    Quiz score: {participantDetails.quiz_score ?? 0}
+                                    Quiz score: {participantDetails.quiz_score ?? 0} / { quizDetails.total_questions ?? 0}
                                 </Title>
                             </Card>
                             <Result

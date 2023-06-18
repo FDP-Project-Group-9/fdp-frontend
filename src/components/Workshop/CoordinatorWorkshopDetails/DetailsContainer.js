@@ -46,13 +46,6 @@ const participantTabItems = [
             </Title>,
         key: ROUTES.PARTICIPANT_QUIZ
     },
-    {
-        label: <Title level = {5} className="no-margin">
-                <FormOutlined />
-                Feedback
-            </Title>,
-        key: ROUTES.PARTICIPANT_FEEDBACK
-    },
     // {
     //     label: <Title level = {5} className="no-margin">
     //             <SafetyCertificateOutlined />
